@@ -1,4 +1,4 @@
 # iButler
 Smart and automatic task scheduler for Todoist
 
-The beggining
+The beginning
