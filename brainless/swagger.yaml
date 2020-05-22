@@ -1,0 +1,98 @@
+swagger: "2.0"
+info:
+  description: Swagger file for the Brainless API
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/api"
+
+# Paths supported by the server application
+paths:
+  /user:
+    post:
+      operationId: "user.create"
+      tags:
+         - "Users"
+      summary: "API operation for user creation"
+      description: "Creates one user with the provided information payload"
+      parameters:
+        - name: user
+          in: body
+          description: User to create
+          required: True
+          schema:
+            type: object
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+              first_name:
+                type: "string"
+              last_name:
+                type: "string"
+      responses:
+        200:
+          description: "Sucessfully created the user"
+          schema:
+            type: "array"
+            items:
+              properties:
+                user_id:
+                  type: "integer"
+                username:
+                  type: "string"
+                password:
+                  type: "string"
+                first_name:
+                  type: "string"
+                last_name:
+                  type: "string"
+  /account:
+    post:
+      operationId: "account.create"
+      tags:
+         - "Accounts"
+      summary: "API operation for account creation"
+      description: "Creates one third party account with the provided information payload"
+      parameters:
+        - name: account
+          in: body
+          description: Account to create
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: "string"
+              provider:
+                type: "string"
+              user_id:
+                type: "integer"
+              client_id:
+                type: "string"
+              client_secret:
+                type: "string"
+      responses:
+        200:
+          description: "Sucessfully created the account"
+          schema:
+            type: "array"
+            items:
+              properties:
+                account_id:
+                  type: "integer"
+                name:
+                  type: "string"
+                provider:
+                  type: "string"
+                user_id:
+                  type: "integer"
+                client_id:
+                  type: "string"
+                client_secret:
+                  type: "string"

@@ -1,2 +1,8 @@
 pyicloud
 sqlalchemy
+connexion
+Flask-SQLAlchemy
+flask-marshmallow
+marshmallow-sqlalchemy
+marshmallow
+connexion[swagger-ui]
