@@ -22,7 +22,10 @@ def create(user):
     if existing_user is None:
         # Create a user instance using the schema and the passed-in user
         schema = UserSchema()
-        new_user = schema.load(user, session=db.session)
+        new_user = schema.load(user)
+
+        print(type(new_user))
+        print(new_user)
 
         # Add the person to the database
         db.session.add(new_user)

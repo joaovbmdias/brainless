@@ -14,6 +14,7 @@ def startup():
     before starting the full applications
     """
     db.metadata.create_all(db.engine)
+    db.engine.connect().execute('PRAGMA foreign_keys=ON')
 
 def home():
     """

@@ -22,21 +22,13 @@ def create(account):
         # Create an account instance using the schema and the passed-in account
         schema = AccountSchema()
 
-        #TODO:this should work but fails due to the user_id field, which is the only foreign key
-        #using manual object build instead.... lame
+        new_account = schema.load(account)
 
-        new_account = schema.load(account, session=db.session)
-        # new_account = Account(name=account.get('name'),
-        #                       provider=account.get('provider'),
-        #                       user_id=account.get('user_id'),
-        #                       client_id=account.get('client_id'),
-        #                       client_secret=account.get('client_secret'))
-
-        # Add the person to the database
+        # Add the account to the database
         db.session.add(new_account)
         db.session.commit()
 
-        # Serialize and return the newly created person in the response
+        # Serialize and return the newly created account in the response
         return schema.dump(new_account), 201
 
     else:

@@ -9,8 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 CONST_APPLE = 'Apple'
 CONST_GOOGLE = 'Google'
 CONST_DOIST = 'Doist'
-CONST_USERNAME = 'joaovbmdias'
-CONST_EMAIL = 'joaovbmdias@icloud.com'
+
 CONST_PERIOD = 10
 
 basedir = os.path.abspath(os.path.dirname(__file__))

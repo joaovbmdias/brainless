@@ -96,3 +96,51 @@ paths:
                   type: "string"
                 client_secret:
                   type: "string"
+  /event:
+    post:
+      operationId: "event.create"
+      tags:
+         - "Events"
+      summary: "API operation for event creation"
+      description: "Creates one event with the provided information payload"
+      parameters:
+        - name: event
+          in: body
+          description: Event to create
+          required: True
+          schema:
+            type: object
+            properties:
+              title:
+                type: "string"
+              start_datetime:
+                type: "string"
+              end_datetime:
+                type: "string"
+              guid:
+                type: "string"
+              account_id:
+                type: "integer"
+              user_id:
+                type: "integer"
+      responses:
+        200:
+          description: "Sucessfully created the event"
+          schema:
+            type: "array"
+            items:
+              properties:
+                event_id:
+                  type: "integer"
+                title:
+                  type: "string"
+                start_datetime:
+                  type: "string"
+                end_datetime:
+                  type: "string"
+                guid:
+                  type: "string"
+                account_id:
+                  type: "integer"
+                user_id:
+                  type: "integer"
