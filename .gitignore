@@ -133,3 +133,6 @@ dmypy.json
 
 # database
 *.db
+
+# local scripts
+*.sh

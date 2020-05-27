@@ -4,7 +4,8 @@ This is the user module and supports all the ReST actions for USERS
 
 from flask import abort
 from configuration import db
-from models import User, UserSchema
+from models.user import User, UserSchema
+from sqlalchemy.orm.exc import NoResultFound
 
 def create(user):
     """
@@ -24,9 +25,6 @@ def create(user):
         schema = UserSchema()
         new_user = schema.load(user)
 
-        print(type(new_user))
-        print(new_user)
-
         # Add the person to the database
         db.session.add(new_user)
         db.session.commit()
@@ -37,9 +35,11 @@ def create(user):
     else:
         abort(409, f'User {username} already exists')
 
-# def read():
-#     """ Retrieves one user """
-#     print('hello')
+def read():
+    """ This function retrieves one user data """
+    
+    #searches the database
+    print("hello")
 
 # def read_all():
 #     """ Retrieves all users """

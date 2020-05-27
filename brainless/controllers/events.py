@@ -1,37 +1,42 @@
 from flask import abort
 from configuration import db
-from models import Event, EventSchema
+from models.event import Event, EventSchema
+from sqlalchemy.orm.exc import NoResultFound
 
-def create(event):
+def create(user_id, account_id, event):
     """
-    This function creates a new event for a specific user and account
-    based on the passed-in event data
+    This function creates a new event for a specific account
+    of a specific user based on the passed-in account data
 
+    :param user_id: user_id passed-in URL
+    :param account_id: account_id passed-in URL
     :param event: event to create in events structure
-    :return:      201 on success, 406 on event already exists
+    :return: 201 on success, 409 on account already exists
     """
-    #get provided username and validate if already exists
-    account_id = event.get('account_id')
+
+    # get provided event guid
     guid = event.get('guid')
-    existing_event = (Event.query.filter(Event.account_id == account_id)
-                                   .filter(Event.guid == guid)
-                                   .one_or_none())
+
+    # validate if an event with the provided data exists
+    existing_event = (Event.query.filter(Event.guid == guid)
+                                 .filter(Event.account_id == account_id)
+                                 .one_or_none())
 
     if existing_event is None:
-        # Create an event instance using the schema and the passed-in event
         schema = EventSchema()
 
+        # Create an event instance using the schema and the passed-in event
         new_event = schema.load(event)
 
         # Add the event to the database
         db.session.add(new_event)
         db.session.commit()
 
-        # Serialize and return the newly created event in the response
-        return schema.dump(new_event), 201
+        # Serialize and return the newly created event id in the response
+        return new_event.event_id , 201
 
     else:
-        abort(409, f'Event with guid {guid} for account {account_id} already exists')
+        abort(409, f'Event {guid} already exists for account {account_id}')
 
 # def delete(self):
 
