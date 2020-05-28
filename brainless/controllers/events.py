@@ -30,6 +30,7 @@ def create(user_id, account_id, event):
 
         # Add the event to the database
         db.session.add(new_event)
+
         db.session.commit()
 
         # Serialize and return the newly created event id in the response
@@ -69,9 +70,7 @@ def search(user_id, account_id):
     """
 
     # search events for the user and acount ids provided
-    existing_events = (Event.query.filter(Event.user_id == user_id)
-                                  .filter(Event.account_id == account_id)
-                                  .all())
+    existing_events = Event.query.filter(Event.account_id == account_id).all()
     if existing_events is None:
         abort(404, f'No events found')
 

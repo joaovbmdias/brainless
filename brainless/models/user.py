@@ -7,7 +7,6 @@ from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from configuration import db, CONST_OAUTH
 from models.account import Account
-from models.event import Event
 
 class User(db.Model):
     """ User class """
@@ -22,7 +21,6 @@ class User(db.Model):
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     accounts = db.relationship('Account', backref='user', lazy=True)
-    events = db.relationship('Event', backref='event', lazy=True)
 
     def __init__(self, username, password, first_name=None, last_name=None):
         self.user_id = None
@@ -30,7 +28,6 @@ class User(db.Model):
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
-        self.events = []
         self.accounts = []
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp = datetime.utcnow

@@ -12,18 +12,16 @@ class Event(db.Model):
     end_datetime = db.Column(db.DateTime, nullable=False)
     guid = db.Column(db.String(32), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('account.account_id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, title, start_datetime, end_datetime, guid, account_id, user_id):
+    def __init__(self, title, start_datetime, end_datetime, guid, account_id):
         self.event_id = None
         self.title = title
         self.start_datetime = start_datetime
         self.end_datetime = end_datetime
         self.guid = guid
         self.account_id = account_id
-        self.user_id = user_id
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp  = datetime.utcnow
 

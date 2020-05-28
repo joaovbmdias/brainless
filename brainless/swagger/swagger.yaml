@@ -331,8 +331,6 @@ paths:
                 type: string
               account_id:
                 type: integer
-              user_id:
-                type: integer
       responses:
         201:
           description: "Successfully updated the event"
@@ -432,8 +430,6 @@ paths:
               guid:
                 type: string
               account_id:
-                type: integer
-              user_id:
                 type: integer
       responses:
         201:
