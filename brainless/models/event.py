@@ -1,6 +1,6 @@
 from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from configuration import db, CONST_OAUTH
+from configuration import db
 
 class Event(db.Model):
     """ Event class """

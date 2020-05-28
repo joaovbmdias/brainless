@@ -27,7 +27,6 @@ class Account(db.Model):
         self.user_id = user_id
         self.client_id = client_id
         self.client_secret = client_secret
-        self.events = []
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp = datetime.utcnow
 

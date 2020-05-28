@@ -5,7 +5,7 @@ TODO: conditional rule for account.client_secret, mandatory only if necessary (O
 
 from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from configuration import db, CONST_OAUTH
+from configuration import db
 from models.account import Account
 
 class User(db.Model):
@@ -28,7 +28,6 @@ class User(db.Model):
         self.password = password
         self.first_name = first_name
         self.last_name = last_name
-        self.accounts = []
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp = datetime.utcnow
 
