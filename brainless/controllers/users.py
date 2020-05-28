@@ -16,20 +16,20 @@ def create(user):
     :return:     201 on success, 406 on user already exists
     """
 
-    #get provided username and validate if already exists
+    # get provided username and validate if already exists
     username = user.get('username')
     existing_user = User.query.filter(User.username == username).one_or_none()
 
     if existing_user is None:
-        # Create a user instance using the schema and the passed-in user
+        # create a user instance using the schema and the passed-in user
         schema = UserSchema()
         new_user = schema.load(user)
 
-        # Add the person to the database
+        # add the person to the database
         db.session.add(new_user)
         db.session.commit()
 
-        # Serialize and return the newly created person in the response
+        # return the newly created person in the response
         return schema.dump(new_user), 201
 
     else:

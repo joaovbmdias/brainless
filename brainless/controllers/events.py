@@ -1,3 +1,7 @@
+"""
+This is the event module and supports all the ReST actions for EVENTS
+"""
+
 from flask import abort
 from configuration import db
 from models.event import Event, EventSchema
@@ -25,15 +29,15 @@ def create(user_id, account_id, event):
     if existing_event is None:
         schema = EventSchema()
 
-        # Create an event instance using the schema and the passed-in event
+        # create an event instance using the schema and the passed-in event
         new_event = schema.load(event)
 
-        # Add the event to the database
+        # add the event to the database
         db.session.add(new_event)
 
         db.session.commit()
 
-        # Serialize and return the newly created event id in the response
+        # return the newly created event id in the response
         return new_event.event_id , 201
 
     else:

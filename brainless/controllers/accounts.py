@@ -54,14 +54,14 @@ def create(user_id, account):
     if existing_account is None:
         schema = AccountSchema()
 
-        # Create an account instance using the schema and the passed-in account
+        # create an account instance using the schema and the passed-in account
         new_account = schema.load(account)
 
-        # Add the account to the database
+        # add the account to the database
         db.session.add(new_account)
         db.session.commit()
 
-        # Serialize and return the newly created account id in the response
+        # return the newly created account id in the response
         return new_account.account_id , 201
 
     else:

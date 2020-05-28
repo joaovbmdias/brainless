@@ -134,5 +134,7 @@ dmypy.json
 # database
 *.db
 
-# local scripts
+# local
+*.DS_STORE
 *.sh
+BrainlessForReal.postman_collection.json

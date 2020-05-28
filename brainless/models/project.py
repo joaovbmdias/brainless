@@ -13,15 +13,18 @@ class Project(db.Model):
 
     project_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
+    guid = db.Column(db.String(32), nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('account.account_id'), nullable=False)
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     tasks = db.relationship('Task', backref='project', lazy=True)
 
-    def __init__(self, name):
+    def __init__(self, name, guid, account_id):
         self.project_id = None
         self.name = name
+        self.guid = guid
+        self.account_id = account_id
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp = datetime.utcnow
 

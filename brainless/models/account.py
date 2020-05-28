@@ -13,7 +13,7 @@ class Account(db.Model):
     provider = db.Column(db.String(32), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     client_id = db.Column(db.String(32), nullable=False)
-    client_secret = db.Column(db.String(32))
+    client_secret = db.Column(db.String(32), nullable=True)
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

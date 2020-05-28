@@ -15,8 +15,8 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), nullable=False, unique=True)
     password = db.Column(db.String(32), nullable=False)
-    first_name = db.Column(db.String(32))
-    last_name = db.Column(db.String(32))
+    first_name = db.Column(db.String(32), nullable=True)
+    last_name = db.Column(db.String(32), nullable=True)
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
