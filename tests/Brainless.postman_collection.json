@@ -102,7 +102,7 @@
 			"name": "Account",
 			"item": [
 				{
-					"name": "Create Account",
+					"name": "Create account",
 					"event": [
 						{
 							"listen": "test",
@@ -122,7 +122,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Apple Account\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"account_type\": \"login\",\n    \"client_id\": \"joaovbmdias@icloud.com\",\n    \"client_secret\": \"\"\n}",
+							"raw": "{\n    \"name\": \"Apple Account\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"account_type\": \"login\",\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,7 +147,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Same Account",
+					"name": "Create same account",
 					"event": [
 						{
 							"listen": "test",
@@ -192,7 +192,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Another Account",
+					"name": "Create another account",
 					"event": [
 						{
 							"listen": "test",
@@ -300,15 +300,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"account_id\": 3\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:5000/api/users/1/accounts/3",
 							"protocol": "http",
@@ -328,7 +319,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete an Unexisting account",
+					"name": "Delete an unexisting account",
 					"event": [
 						{
 							"listen": "test",
@@ -346,15 +337,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user_id\": 1,\n    \"account_id\": 3\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "http://localhost:5000/api/users/1/accounts/300",
 							"protocol": "http",
@@ -374,7 +356,7 @@
 					"response": []
 				},
 				{
-					"name": "Read One existing User Account",
+					"name": "Read one existing account",
 					"event": [
 						{
 							"listen": "test",
@@ -411,7 +393,7 @@
 					"response": []
 				},
 				{
-					"name": "Read One Unexisting User Account",
+					"name": "Read one unexisting account",
 					"event": [
 						{
 							"listen": "test",
@@ -448,7 +430,7 @@
 					"response": []
 				},
 				{
-					"name": "Read All User Accounts",
+					"name": "Read all user accounts",
 					"event": [
 						{
 							"listen": "test",
@@ -536,7 +518,7 @@
 			"name": "Event",
 			"item": [
 				{
-					"name": "Create Event",
+					"name": "Create event",
 					"event": [
 						{
 							"listen": "test",
@@ -583,7 +565,7 @@
 					"response": []
 				},
 				{
-					"name": "Create Same Event",
+					"name": "Create same event",
 					"event": [
 						{
 							"listen": "test",
@@ -624,6 +606,342 @@
 								"accounts",
 								"1",
 								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create another event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c5b42ff3-a50d-421a-a501-593b01a100f9",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Awesome Event berlaites\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlasgnkbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"user_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a third event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "392c5bbb-62b5-45f5-a7bc-3e284bed4974",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Awesome Event berlindes\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghullkghjkhjkgkqeiugtoiweg\",\n    \"account_id\": 1,\n    \"user_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an existing event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24a4b9b5-b821-4af6-9ffc-e36faf0cc6d6",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete an unexisting event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0451e2f1-b7c6-4b3a-b595-e84167e49d70",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events/300",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events",
+								"300"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read one existing event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16bfe03f-342e-411f-aee6-b2edd165dc7f",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read one unexisting event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8907edc7-a065-47e7-8f64-eb8c1b33f9c3",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(404);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events/100",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read all user events",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9063b071-c4ae-4b97-a78e-c68c704305e4",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an existing event",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ce06c6aa-b58c-4d5f-a9d7-c9fce8bee826",
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Evento Berlindes\",\n    \"guid\": \"sdagalihdgahgpsbgbPFbp\",\n    \"user_id\": 1,\n    \"start_datetime\": \"2020-05-22 22:00\",\n    \"end_datetime\": \"2020-05-22 23:00\",\n    \"account_id\": 1,\n    \"event_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/users/1/accounts/1/events/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"users",
+								"1",
+								"accounts",
+								"1",
+								"events",
+								"1"
 							]
 						}
 					},

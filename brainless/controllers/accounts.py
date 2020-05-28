@@ -73,7 +73,6 @@ def read(user_id, account_id):
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param account: payload information
     :return: 200 on success, 404 on account already exists
     """
 
@@ -96,14 +95,13 @@ def search(user_id):
     This function retrieves a list of accounts based on the provided information
 
     :param user_id: user_id passed-in URL
-    :param account: payload information
     :return: 200 on success, 404 on no accounts found
     """
 
     # validate provided data
     user_account_check(user_id, None, None)
 
-    #get provided username and validate if account exists
+    #  search for accounts for the user id provided
     existing_accounts = Account.query.filter(Account.user_id == user_id).all()
     if existing_accounts is None:
         abort(404, f'No accounts found')
@@ -127,7 +125,7 @@ def update(user_id, account_id, account):
     user_account_check(user_id, account_id, account)
 
     try:
-        #get provided name and validate if already exists
+        # validate if account exists
         existing_account = Account.query.filter(Account.account_id == account_id).one()    
     except NoResultFound:
         abort(404, f'Account {account_id} not found')
@@ -152,7 +150,6 @@ def delete(user_id, account_id):
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param account: payload information
     :return: 200 on success, 404 on account not found
     """
 
@@ -160,7 +157,7 @@ def delete(user_id, account_id):
     user_account_check(user_id, account_id, None)
 
     try:
-        #get provided name and validate if account exists
+        # validate if account exists
         existing_account = Account.query.filter(Account.account_id == account_id).one()
     except NoResultFound:
         abort(404, f'Account {account_id} not found')

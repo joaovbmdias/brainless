@@ -38,51 +38,97 @@ def create(user_id, account_id, event):
     else:
         abort(409, f'Event {guid} already exists for account {account_id}')
 
-# def delete(self):
+def read(user_id, account_id, event_id):
+    """
+    This function retrieves an event data based on the provided information
 
-#     try:
-#         session = Session()
+    :param user_id: user_id passed-in URL
+    :param account_id: account_id passed-in URL
+    :param event_id: event_id passed-in URL
+    :return: 200 on success, 404 on event already exists
+    """
 
-#         (session.query(Event).filter(Event.guid     == self.guid)
-#                                 .filter(Event.provider == self.provider)
-#                                 .filter(Event.user_id  == self.user_id)
-#                                 .one())
-        
-#         # Add the event to the database
-#         session.delete(self)
-#         session.commit()
-#     except NoResultFound:
-#         session.rollback()
-#         print('Event {} from provider {} belonging to user {} was not found'.format(self.guid, self.provider, self.user_id))
-#     except:
-#         session.rollback()
-#         print('Event deletion failed')
+    try:
+        # get event if it exists
+        existing_event = Event.query.filter(Event.event_id == event_id).one()
+    except NoResultFound:
+        abort(404, f'Event with id:{event_id} not found')
 
-# def load(events):
+    schema = EventSchema()
+    event = schema.dump(existing_event)
 
-#     try:
-#         session = Session()
+    return event, 200
 
-#         for event in events:
-#             event.create()
-        
-#         session.commit()
-#     except:
-#         session.rollback()
-#         print('Evets creation failed')
+def search(user_id, account_id):
+    """
+    This function retrieves a list of events based on the provided information
 
-# #TODO: receive list of events????
-# def delete(user, range):
+    :param user_id: user_id passed-in URL
+    :param account_id: account_id passed-in URL
+    :return: 200 on success, 404 on no events found
+    """
 
-#     try:
-#         session = Session()
+    # search events for the user and acount ids provided
+    existing_events = (Event.query.filter(Event.user_id == user_id)
+                                  .filter(Event.account_id == account_id)
+                                  .all())
+    if existing_events is None:
+        abort(404, f'No events found')
 
-#         existing_events = (session.query(Event).filter(Event.start_datetime <= range['to'])
-#                                                .filter(Event.user_id        == user.id))
+    schema = EventSchema(many=True)
+    events = schema.dump(existing_events)
 
-#         for event in existing_events:
-#             session.delete(event)
-        
-#         session.commit()
-#     except:
-#         session.rollback()
+    return events, 200
+
+def update(user_id, account_id, event_id, event):
+    """
+    This function updates an account based on the provided information
+
+    :param user_id: user_id passed-in URL
+    :param account_id: account_id passed-in URL
+    :param event_id: event_id passed-in URL
+    :param event: payload information
+    :return: 200 on success, 404 on event not found
+    """
+
+    try:
+        # validate if event exists
+        existing_event = Event.query.filter(Event.event_id == event_id).one()    
+    except NoResultFound:
+        abort(404, f'Event {event_id} not found')
+    
+    schema = EventSchema()
+
+    # Create an event instance using the schema and the passed-in event
+    updated_event = schema.load(event)
+
+    # Set the id to the event we want to update
+    updated_event.event_id = existing_event.event_id
+
+    # Add the event to the database
+    db.session.merge(updated_event)
+    db.session.commit()
+
+    return "Event updated", 200
+
+def delete(user_id, account_id, event_id):
+    """
+    This function deletes an event based on the provided information
+
+    :param user_id: user_id passed-in URL
+    :param account_id: account_id passed-in URL
+    :param event_id: event_id passed-in URL
+    :return: 200 on success, 404 on event not found
+    """
+
+    try:
+        # validate if event exists
+        existing_event = Event.query.filter(Event.event_id == event_id).one()
+    except NoResultFound:
+        abort(404, f'Event {event_id} not found')
+
+    # Add the event to the database
+    db.session.delete(existing_event)
+    db.session.commit()
+
+    return "Event deleted", 200

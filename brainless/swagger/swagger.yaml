@@ -249,7 +249,156 @@ paths:
 ################################################            EVENTS             ################################################
 ###############################################################################################################################
 ###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/events/{event_id}:
+    get:
+      operationId: "events.read"
+      tags:
+        - "Events"
+      summary: "API operation for event retrieval"
+      description: "Retrieves one event related to a third party account with the provided ID"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved event information"
+          schema:
+            type: array
+            items:
+              properties:
+                account_id:
+                  type: integer
+                title:
+                  type: string
+                start_datetime:
+                  type: string
+                end_datetime:
+                  type: string
+                guid:
+                  type: string
+      x-swagger-router-controller: "controllers"
+    put:
+      operationId: "events.update"
+      tags:
+         - "Events"
+      summary: "API operation for event update"
+      description: "Updates one event realted to a third party account with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          type: integer
+        - name: "event"
+          in: body
+          description: "Event to update"
+          required: True
+          schema:
+            type: object
+            properties:
+              event_id:
+                type: integer
+              title:
+                type: string
+              start_datetime:
+                type: string
+              end_datetime:
+                type: string
+              guid:
+                type: string
+              account_id:
+                type: integer
+              user_id:
+                type: integer
+      responses:
+        201:
+          description: "Successfully updated the event"
+      x-swagger-router-controller: "controllers"
+    delete:
+      operationId: "events.delete"
+      tags:
+         - "Events"
+      summary: "API operation for event deletion"
+      description: "Deletes one event related to a third party account with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Successfully deleted the event"
+      x-swagger-router-controller: "controllers"
   /users/{user_id}/accounts/{account_id}/events:
+    get:
+      operationId: "events.search"
+      tags:
+        - "Events"
+      summary: "API operation for event retrieval"
+      description: "Retrieves one or several events related to third party accounts with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved event information"
+          schema:
+            type: array
+            items:
+              properties:
+                account_id:
+                  type: integer
+                title:
+                  type: string
+                start_datetime:
+                  type: string
+                end_datetime:
+                  type: string
+                guid:
+                  type: string
+      x-swagger-router-controller: "controllers"
     post:
       operationId: "events.create"
       tags:
