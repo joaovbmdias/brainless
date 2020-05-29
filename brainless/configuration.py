@@ -17,6 +17,7 @@ CONST_TASK = 'TASK'
 
 # authentication types
 CONST_OAUTH='OAUTH2'
+CONST_USERPASS='USERPASS'
 
 # configurations
 CONST_PERIOD = 10
