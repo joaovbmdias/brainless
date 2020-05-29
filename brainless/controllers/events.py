@@ -7,15 +7,16 @@ from configuration import db
 from models.event import Event, EventSchema
 from sqlalchemy.orm.exc import NoResultFound
 
-def create(user_id, account_id, event):
+def create(user_id, account_id, calendar_id, event):
     """
-    This function creates a new event for a specific account
-    of a specific user based on the passed-in account data
+    This function creates a new event for a specific event
+    of a specific user based on the passed-in event data
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
+    :param calendar_id: calendar_id passed-in URL
     :param event: event to create in events structure
-    :return: 201 on success, 409 on account already exists
+    :return: 201 on success, 409 on event already exists
     """
 
     # get provided event guid
@@ -23,7 +24,7 @@ def create(user_id, account_id, event):
 
     # validate if an event with the provided data exists
     existing_event = (Event.query.filter(Event.guid == guid)
-                                 .filter(Event.account_id == account_id)
+                                 .filter(Event.calendar_id == calendar_id)
                                  .one_or_none())
 
     if existing_event is None:
@@ -41,14 +42,15 @@ def create(user_id, account_id, event):
         return new_event.event_id , 201
 
     else:
-        abort(409, f'Event {guid} already exists for account {account_id}')
+        abort(409, f'Event {guid} already exists for calendar {calendar_id}')
 
-def read(user_id, account_id, event_id):
+def read(user_id, account_id, calendar_id, event_id):
     """
     This function retrieves an event data based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
+    :param calendar_id: calendar_id passed-in URL
     :param event_id: event_id passed-in URL
     :return: 200 on success, 404 on event already exists
     """
@@ -64,17 +66,18 @@ def read(user_id, account_id, event_id):
 
     return event, 200
 
-def search(user_id, account_id):
+def search(user_id, account_id, calendar_id):
     """
     This function retrieves a list of events based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
+    :param calendar_id: calendar_id passed-in URL
     :return: 200 on success, 404 on no events found
     """
 
     # search events for the user and acount ids provided
-    existing_events = Event.query.filter(Event.account_id == account_id).all()
+    existing_events = Event.query.filter(Event.calendar_id == calendar_id).all()
     if existing_events is None:
         abort(404, f'No events found')
 
@@ -83,12 +86,13 @@ def search(user_id, account_id):
 
     return events, 200
 
-def update(user_id, account_id, event_id, event):
+def update(user_id, account_id, calendar_id, event_id, event):
     """
     This function updates an account based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
+    :param calendar_id: calendar_id passed-in URL
     :param event_id: event_id passed-in URL
     :param event: payload information
     :return: 200 on success, 404 on event not found
@@ -114,12 +118,13 @@ def update(user_id, account_id, event_id, event):
 
     return "Event updated", 200
 
-def delete(user_id, account_id, event_id):
+def delete(user_id, account_id, calendar_id, event_id):
     """
     This function deletes an event based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
+    :param calendar_id: calendar_id passed-in URL
     :param event_id: event_id passed-in URL
     :return: 200 on success, 404 on event not found
     """

@@ -18,7 +18,7 @@ class Task(db.Model):
     __tablename__ = 'task'
 
     task_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(32), nullable=False)
+    name = db.Column(db.String(32), nullable=False)
     project_id = db.Column(db.Integer, db.ForeignKey('project.project_id'), nullable=False)
     due_datetime = db.Column(db.DateTime, nullable=True)
     priority = db.Column(db.Integer, nullable=True)
@@ -28,9 +28,9 @@ class Task(db.Model):
 
     labels = db.relationship('Label', secondary=task_labels, backref='tasks')
 
-    def __init__(self, title, project_id, guid, due_datetime=None, priority=None):
+    def __init__(self, name, project_id, guid, due_datetime=None, priority=None):
         self.task_id = None
-        self.title = title
+        self.name = name
         self.project_id = project_id
         self.due_datetime = due_datetime
         self.priority = priority

@@ -31,7 +31,7 @@ connexion_app = connexion.App(__name__, specification_dir=os.path.join(basedir, 
 app = connexion_app.app
 
 # Configure the SQLAlchemy part of the app instance
-app.config['SQLALCHEMY_ECHO'] = True
+app.config['SQLALCHEMY_ECHO'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.path.join(basedir, 'brainless.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

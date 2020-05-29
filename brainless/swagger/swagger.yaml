@@ -246,10 +246,191 @@ paths:
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
-################################################            EVENTS             ################################################
+###############################################            CALENDARS             ##############################################
 ###############################################################################################################################
 ###############################################################################################################################
-  /users/{user_id}/accounts/{account_id}/events/{event_id}:
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}:
+    get:
+      operationId: "calendars.read"
+      tags:
+        - "Calendars"
+      summary: "API operation for calendar retrieval"
+      description: "Retrieves one calendar related to a third party account with the provided ID"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved calendar information"
+          schema:
+            type: array
+            items:
+              properties:
+                calendar_id:
+                  type: integer
+                account_id:
+                  type: integer
+                name:
+                  type: string
+                guid:
+                  type: string
+      x-swagger-router-controller: "controllers"
+    put:
+      operationId: "calendars.update"
+      tags:
+         - "Calendars"
+      summary: "API operation for calendar update"
+      description: "Updates one calendar related to a third party account with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          type: integer
+        - name: "calendar"
+          in: body
+          description: "Calendar to update"
+          required: True
+          schema:
+            type: object
+            properties:
+              calendar_id:
+                type: integer
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
+      responses:
+        201:
+          description: "Successfully updated the calendar"
+      x-swagger-router-controller: "controllers"
+    delete:
+      operationId: "calendars.delete"
+      tags:
+         - "Calendars"
+      summary: "API operation for calendar deletion"
+      description: "Deletes one calendar related to a third party account with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Successfully deleted the calendar"
+      x-swagger-router-controller: "controllers"
+  /users/{user_id}/accounts/{account_id}/calendars:
+    get:
+      operationId: "calendars.search"
+      tags:
+        - "Calendars"
+      summary: "API operation for calendar retrieval"
+      description: "Retrieves one or several calendars related to third party accounts with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved calendar information"
+          schema:
+            type: array
+            items:
+              properties:
+                calendar_id:
+                  type: integer
+                account_id:
+                  type: integer
+                name:
+                  type: string
+                guid:
+                  type: string
+      x-swagger-router-controller: "controllers"
+    post:
+      operationId: "calendars.create"
+      tags:
+         - "Calendars"
+      summary: "API operation for calendar creation"
+      description: "Creates one calendar with the provided information payload"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the project's account"
+          required: True
+          type: integer
+        - name: "calendar"
+          in: body
+          description: "Calendar to create"
+          required: True
+          schema:
+            type: object
+            properties:
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
+      responses:
+        201:
+          description: "Successfully created the calendar"
+          schema:
+            type: integer
+      x-swagger-router-controller: "controllers"
+###############################################################################################################################
+###############################################################################################################################
+################################################            EVENTS               ##############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}/events/{event_id}:
     get:
       operationId: "events.read"
       tags:
@@ -267,6 +448,11 @@ paths:
           description: "ID of the account"
           required: True
           type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
         - name: "event_id"
           in: path
           description: "ID of the event"
@@ -279,9 +465,9 @@ paths:
             type: array
             items:
               properties:
-                account_id:
+                calendar_id:
                   type: integer
-                title:
+                name:
                   type: string
                 start_datetime:
                   type: string
@@ -307,6 +493,11 @@ paths:
           description: "ID of the account"
           required: True
           type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
         - name: "event_id"
           in: path
           description: "ID of the event"
@@ -321,7 +512,7 @@ paths:
             properties:
               event_id:
                 type: integer
-              title:
+              name:
                 type: string
               start_datetime:
                 type: string
@@ -329,7 +520,7 @@ paths:
                 type: string
               guid:
                 type: string
-              account_id:
+              calendar_id:
                 type: integer
       responses:
         201:
@@ -352,6 +543,11 @@ paths:
           description: "ID of the account"
           required: True
           type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
         - name: "event_id"
           in: path
           description: "ID of the event"
@@ -361,7 +557,7 @@ paths:
         200:
           description: "Successfully deleted the event"
       x-swagger-router-controller: "controllers"
-  /users/{user_id}/accounts/{account_id}/events:
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}/events:
     get:
       operationId: "events.search"
       tags:
@@ -379,6 +575,11 @@ paths:
           description: "ID of the account"
           required: True
           type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          type: integer
       responses:
         200:
           description: "Sucessfully retrieved event information"
@@ -386,9 +587,9 @@ paths:
             type: array
             items:
               properties:
-                account_id:
+                calendar_id:
                   type: integer
-                title:
+                name:
                   type: string
                 start_datetime:
                   type: string
@@ -414,6 +615,11 @@ paths:
           description: "ID of the event's account"
           required: True
           type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the event's account"
+          required: True
+          type: integer
         - name: "event"
           in: body
           description: "Event to create"
@@ -421,7 +627,7 @@ paths:
           schema:
             type: object
             properties:
-              title:
+              name:
                 type: string
               start_datetime:
                 type: string
@@ -429,7 +635,7 @@ paths:
                 type: string
               guid:
                 type: string
-              account_id:
+              calendar_id:
                 type: integer
       responses:
         201:
@@ -484,7 +690,7 @@ paths:
       tags:
          - "Projects"
       summary: "API operation for project update"
-      description: "Updates one project realted to a third party account with the provided information payload"
+      description: "Updates one project related to a third party account with the provided information payload"
       parameters:
         - name: "user_id"
           in: path
@@ -569,6 +775,8 @@ paths:
             type: array
             items:
               properties:
+                project_id:
+                  type: integer
                 account_id:
                   type: integer
                 name:
@@ -654,7 +862,7 @@ paths:
               properties:
                 task_id:
                   type: integer
-                title:
+                name:
                   type: string
                 project_id:
                   type: integer
@@ -701,7 +909,7 @@ paths:
             properties:
               task_id:
                 type: integer
-              title:
+              name:
                 type: string
               project_id:
                 type: integer
@@ -778,7 +986,7 @@ paths:
               properties:
                 task_id:
                   type: integer
-                title:
+                name:
                   type: string
                 project_id:
                   type: integer
@@ -818,7 +1026,7 @@ paths:
           schema:
             type: object
             properties:
-              title:
+              name:
                 type: string
               project_id:
                 type: integer
@@ -871,7 +1079,7 @@ paths:
               properties:
                 labek_id:
                   type: integer
-                title:
+                name:
                   type: string
                 guid:
                   type: string
@@ -907,7 +1115,7 @@ paths:
             properties:
               label_id:
                 type: integer
-              title:
+              name:
                 type: string
               guid:
                 type: string
@@ -970,7 +1178,7 @@ paths:
               properties:
                 label_id:
                   type: integer
-                title:
+                name:
                   type: string
                 guid:
                   type: string
@@ -999,7 +1207,7 @@ paths:
           schema:
             type: object
             properties:
-              title:
+              name:
                 type: string
               guid:
                 type: string

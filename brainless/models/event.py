@@ -7,21 +7,21 @@ class Event(db.Model):
     __tablename__ = 'event'
 
     event_id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(32), nullable=False)
+    name = db.Column(db.String(32), nullable=False)
     start_datetime = db.Column(db.DateTime, nullable=False)
     end_datetime = db.Column(db.DateTime, nullable=False)
     guid = db.Column(db.String(32), nullable=False)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.account_id'), nullable=False)
+    calendar_id = db.Column(db.Integer, db.ForeignKey('calendar.calendar_id'), nullable=False)
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, title, start_datetime, end_datetime, guid, account_id):
+    def __init__(self, name, start_datetime, end_datetime, guid, calendar_id):
         self.event_id = None
-        self.title = title
+        self.name = name
         self.start_datetime = start_datetime
         self.end_datetime = end_datetime
         self.guid = guid
-        self.account_id = account_id
+        self.calendar_id = calendar_id
         self.__created_timestamp = datetime.utcnow
         self.__edited_timestamp  = datetime.utcnow
 
