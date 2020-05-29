@@ -1,6 +1,6 @@
 from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from configuration import db, CONST_OAUTH
+from configuration import db, CONST_OAUTH, CONST_CALENDAR
 from models.event import Event
 
 class Account(db.Model):
@@ -10,6 +10,7 @@ class Account(db.Model):
     account_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
     account_type = db.Column(db.String(32), nullable=False)
+    authentication_type = db.Column(db.String(32), nullable=False)
     provider = db.Column(db.String(32), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     client_id = db.Column(db.String(32), nullable=False)
@@ -19,10 +20,11 @@ class Account(db.Model):
 
     events = db.relationship('Event', backref='account', lazy=True)
 
-    def __init__(self, name, provider, user_id, client_id, client_secret, account_type=CONST_OAUTH):
+    def __init__(self, name, provider, user_id, client_id, client_secret, account_type=CONST_CALENDAR, authentication_type=CONST_OAUTH):
         self.account_id = None
         self.name = name
         self.account_type = account_type
+        self.authentication_type = authentication_type
         self.provider = provider
         self.user_id = user_id
         self.client_id = client_id

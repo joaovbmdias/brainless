@@ -6,12 +6,19 @@ import os
 import connexion
 from flask_sqlalchemy import SQLAlchemy
 
-CONST_APPLE = 'Apple'
-CONST_GOOGLE = 'Google'
-CONST_DOIST = 'Doist'
+# providers
+CONST_APPLE = 'APPLE'
+CONST_GOOGLE = 'GOOGLE'
+CONST_DOIST = 'DOIST'
 
+# account types
+CONST_CALENDAR = 'CALENDAR'
+CONST_TASK = 'TASK'
+
+# authentication types
 CONST_OAUTH='OAUTH2'
 
+# configurations
 CONST_PERIOD = 10
 
 basedir = os.path.abspath(os.path.dirname(__file__))
