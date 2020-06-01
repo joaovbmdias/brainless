@@ -5,30 +5,6 @@ This is the account module and supports all the ReST actions for ACCOUNTS
 from flask import abort
 from configuration import db
 from models.account import Account, AccountSchema
-from sqlalchemy.orm.exc import NoResultFound
-
-def user_account_check(user_id, account_id, account):
-    """
-    This function checks payload information againts URL passed-in arguments
-
-    :param user_id: user_id passed-in URL
-    :param account_id: account_id passed-in URL
-    :param account: payload information
-    """
-    
-    if user_id is not None and account is not None:
-        # get provided account_id and validate if compliant with in path account_id
-        body_account_id = account.get('account_id')
-
-        if body_account_id != account_id:
-            abort(400, f'Account identification data invalid')
-
-    if account_id is not None and account is not None:
-        # get the provided user_id and validate if compliant with in path user_id
-        body_user_id = account.get('user_id')
-
-        if body_user_id != user_id:
-            abort(400, f'User identification data invalid')
 
 def create(user_id, account):
     """
@@ -40,32 +16,15 @@ def create(user_id, account):
     :return: 201 on success, 409 on account already exists
     """
 
-    # validate provided data
-    user_account_check(user_id, None, account)
+    schema = AccountSchema()
+    new_account = schema.load(account)
 
-    # get provided account name
-    name = account.get('name')
-
-    # validate if an account with the provided data exists
-    existing_account = (Account.query.filter(Account.name == name)
-                                     .filter(Account.user_id == user_id)
-                                     .one_or_none())
-
-    if existing_account is None:
-        schema = AccountSchema()
-
-        # create an account instance using the schema and the passed-in account
-        new_account = schema.load(account)
-
-        # add the account to the database
-        db.session.add(new_account)
-        db.session.commit()
-
-        # return the newly created account id in the response
-        return new_account.account_id , 201
-
+    if new_account.create() is None:
+        abort(409, f'Account {new_account.name} already exists')
     else:
-        abort(409, f'Account {name} already exists')
+        account_serialized = schema.dump(new_account)
+
+        return account_serialized, 201
 
 def read(user_id, account_id):
     """
@@ -76,19 +35,17 @@ def read(user_id, account_id):
     :return: 200 on success, 404 on account already exists
     """
 
-    # validate provided data
-    user_account_check(user_id, account_id, None)
+    account = Account(account_id=account_id)
 
-    try:
-        # get account if it exists
-        existing_account = Account.query.filter(Account.account_id == account_id).one()    
-    except NoResultFound:
+    read_account = account.read()
+
+    if read_account is None:
         abort(404, f'Account with id:{account_id} not found')
+    else:
+        schema = AccountSchema()
+        account_serialized = schema.dump(read_account)
 
-    schema = AccountSchema()
-    account = schema.dump(existing_account)
-
-    return account, 200
+        return account_serialized, 200
 
 def search(user_id):
     """
@@ -98,10 +55,6 @@ def search(user_id):
     :return: 200 on success, 404 on no accounts found
     """
 
-    # validate provided data
-    user_account_check(user_id, None, None)
-
-    #  search for accounts for the user id provided
     existing_accounts = Account.query.filter(Account.user_id == user_id).all()
     if existing_accounts is None:
         abort(404, f'No accounts found')
@@ -121,28 +74,17 @@ def update(user_id, account_id, account):
     :return: 200 on success, 404 on account not found
     """
 
-    # validate provided data
-    user_account_check(user_id, account_id, account)
-
-    try:
-        # validate if account exists
-        existing_account = Account.query.filter(Account.account_id == account_id).one()    
-    except NoResultFound:
-        abort(404, f'Account {account_id} not found')
-    
     schema = AccountSchema()
+    account_to_update = schema.load(account)
 
-    # Create an account instance using the schema and the passed-in account
-    updated_account = schema.load(account)
+    updated_account = account_to_update.update()
 
-    # Set the id to the account we want to update
-    updated_account.account_id = existing_account.account_id
+    if updated_account is None:
+        abort(404, f'Account {account_id} not found')
+    else:
+        account_serialized = schema.dump(updated_account)
 
-    # Add the account to the database
-    db.session.merge(updated_account)
-    db.session.commit()
-
-    return "Account updated", 200
+        return account_serialized, 200
 
 def delete(user_id, account_id):
     """
@@ -153,17 +95,9 @@ def delete(user_id, account_id):
     :return: 200 on success, 404 on account not found
     """
 
-    # validate provided data
-    user_account_check(user_id, account_id, None)
+    account_to_delete = Account(account_id=account_id)
 
-    try:
-        # validate if account exists
-        existing_account = Account.query.filter(Account.account_id == account_id).one()
-    except NoResultFound:
+    if account_to_delete.delete() is not None:
         abort(404, f'Account {account_id} not found')
-
-    # Add the event to the database
-    db.session.delete(existing_account)
-    db.session.commit()
-
-    return "Account deleted", 200
+    else:
+        return "Account deleted", 200

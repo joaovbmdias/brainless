@@ -9,6 +9,2693 @@
 			"name": "User",
 			"item": [
 				{
+					"name": "Account",
+					"item": [
+						{
+							"name": "Calendar",
+							"item": [
+								{
+									"name": "Event",
+									"item": [
+										{
+											"name": "Create event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "a4058f24-daac-4394-b74e-32ca1faad179",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Awesome Event\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"calendar_id\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create same event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "1c7f74f0-1e32-4da1-ac26-1b1b6bec743f",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(409);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Awesome Event\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"calendar_id\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create another event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c5b42ff3-a50d-421a-a501-593b01a100f9",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Awesome Event berlaites\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlasgnkbfzsdjhgfoqeiugtoiweg\",\n    \"calendar_id\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create a third event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "392c5bbb-62b5-45f5-a7bc-3e284bed4974",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Awesome Event berlindes\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghullkghjkhjkgkqeiugtoiweg\",\n    \"calendar_id\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an existing event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "24a4b9b5-b821-4af6-9ffc-e36faf0cc6d6",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events/3",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events",
+														"3"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an unexisting event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "0451e2f1-b7c6-4b3a-b595-e84167e49d70",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events/300",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events",
+														"300"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one existing event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "16bfe03f-342e-411f-aee6-b2edd165dc7f",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one unexisting event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8907edc7-a065-47e7-8f64-eb8c1b33f9c3",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events/100",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events",
+														"100"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read all user events",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9063b071-c4ae-4b97-a78e-c68c704305e4",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Update an existing event",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "ce06c6aa-b58c-4d5f-a9d7-c9fce8bee826",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Evento Berlindes\",\n    \"guid\": \"sdagalihdgahgpsbgbPFbp\",\n    \"start_datetime\": \"2020-05-22 22:00\",\n    \"end_datetime\": \"2020-05-22 23:00\",\n    \"calendar_id\": 1,\n    \"event_id\": 1\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1/events/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"calendars",
+														"1",
+														"events",
+														"1"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "Create calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "b72396c7-535d-4483-9233-cb600d5680ac",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Calendar\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create same calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d30588d6-c254-487e-9297-bc168f4aeda4",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(409);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Calendar\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create another calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8e07bba2-88a3-4e20-a343-f524d35b88e9",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesomist Calendar\",\n    \"guid\": \"alfkvbaldfkbaldkbaldkb\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a third calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ec5b1a07-2025-4238-bbc9-a27ed12a7d9a",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Greatest Calendar\",\n    \"guid\": \"sdbaldf aldfba\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an existing calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6952b7f5-139b-4c7a-8941-cd1ba6fa7025",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an unexisting calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "7e5c963a-111b-4508-9529-c318547458fc",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/300",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars",
+												"300"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one existing calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "5bb8f6b4-acbe-4df3-957b-cdb5ca2268a6",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one unexisting calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ec13a2c0-1576-41af-b3b1-6a899c27d3d5",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/100",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars",
+												"100"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read all user calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "11c4bb67-bcbc-41a5-8d5a-f634237e62c6",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update an existing calendar",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bc000250-9ea0-4f79-95f3-660274d04ebf",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Calendar Updated\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"calendar_id\": 1\n    \n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/calendars/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"calendars",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Project",
+							"item": [
+								{
+									"name": "Task",
+									"item": [
+										{
+											"name": "Create task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "21262596-13d7-41b8-8b30-5e8c98996266",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing task\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create same task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "de9b7b2d-54ed-4c26-a5a0-49d519a04fab",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(409);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing task\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create another task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9aed09ae-fea9-478a-a039-881534f1bd9d",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing taskarooney\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"sftjklkjskduk\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create a third task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "011d07f0-44e5-4fc1-95fe-d4837f1ca7a8",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing Wonderful\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"adhsjkdutsjstykstj\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an existing task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "86a158a2-c612-4c8c-b544-4f166caf78d0",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/3",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks",
+														"3"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an unexisting task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "22d20ee9-53e9-47b9-b869-2491bbb78d68",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/300",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks",
+														"300"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one existing task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c885a26f-9e5b-4233-bdb3-91ce2327fd56",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one unexisting task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "a98f0f56-2eec-49b0-9e29-cc1bd781917b",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/100",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks",
+														"100"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read all user tasks",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "12f5fb67-1a80-4ff1-a1e4-c682ff89db8b",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Update an existing task",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "eaf67771-285f-4aae-90a2-38b6e016330f",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"task_id\": 1,\n    \"name\": \"Amazing task updated\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"projects",
+														"1",
+														"tasks",
+														"1"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "Label",
+									"item": [
+										{
+											"name": "Create label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "3fbb3310-04ec-440a-bf7c-5b38531dee2c",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create same label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "20a43d3d-bb12-45c3-b4ee-f47aafd6b7cf",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(409);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create another label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "d984970f-32a0-490f-9bfe-8c9b52d0fb6e",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Better label\",\n    \"guid\": \"qgmkopdkmqwrqr3j3jiopjwe\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Create a third label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "2f6b5331-2c58-411a-9baf-70c8a5df3595",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(201);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Greater label\",\n    \"guid\": \"er3trtuiiuouyuk78i787\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an existing label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "299fe2a8-bc1e-4ca3-8658-3f02b3b823c5",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/3",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels",
+														"3"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Delete an unexisting label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "14bf1bb7-9b71-4f97-8712-eccce02e32f1",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/300",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels",
+														"300"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one existing label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "f51c3aff-07ec-46bd-aa32-2e6e01d6b0d1",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels",
+														"1"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read one unexisting label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "fdc3195c-4f75-41c7-a511-f35482cbb3bb",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(404);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/100",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels",
+														"100"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Read all user labels",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "cd77fae4-4ca7-46b9-9446-d71b4dbb1ac4",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Update an existing label",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "76ddf980-a0a9-43ee-9297-20a3408223cb",
+														"exec": [
+															"pm.test(\"Status test\", function () {",
+															"    pm.response.to.have.status(200);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PUT",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"Amazing label updated\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
+													"protocol": "http",
+													"host": [
+														"localhost"
+													],
+													"port": "5000",
+													"path": [
+														"api",
+														"users",
+														"1",
+														"accounts",
+														"1",
+														"labels",
+														"1"
+													]
+												}
+											},
+											"response": []
+										}
+									],
+									"protocolProfileBehavior": {},
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "Create project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "dd7ec291-de80-4ded-b1bd-2baf83dde575",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Project\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create same project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "8e356fce-b1af-417f-b60f-a8a87a2e2b1b",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(409);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Project\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create another project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d535687e-bc9c-4ac2-8948-edbc284b089d",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"An Even more awesome Project\",\n    \"guid\": \"adfhsdykluiglçoçõuryirtyuetutrh\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a third project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "c87b7cdd-b4d9-4f89-9715-c43381fb5ca9",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Cool awesome Project\",\n    \"guid\": \"sykt5ywtrshatrusns\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an existing project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "dc07f008-73f3-4bb7-a750-27c797d7dab6",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects/3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an unexisting project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f942d680-bac8-4e0e-bbb7-07a32c16e049",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects/300",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects",
+												"300"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one existing project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "6f73094b-9b99-438a-8665-7664c016fd3b",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one unexisting project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "9081a847-77b6-44e5-bc1a-ba197fa7780b",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects/100",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects",
+												"100"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read all user projects",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cb62a7a3-2a20-4c89-af1e-8b24c8a0e2f0",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update an existing project",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "eac80412-8cd1-4f2f-8dcf-68614ce0e12e",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Awesome Project Updated\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"projects",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Create account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e64ccc93-b457-4133-b65c-f6e616f01015",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create same account by name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fd9490c1-a909-4da1-b2c9-6bd83fc1cf90",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(409);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create same account by client_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "82908df3-eca9-4687-bf2a-70a2a7efded3",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(409);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Apple Account 2\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create another account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3a8ebcb0-2609-4ca2-893b-8b5a64fb1486",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Another Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"adhgsdyjkruykltjlksfhd\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a third account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bda228ea-d1ec-4780-b1f9-2be7c6639802",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(201);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Another Account Test\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"sdGHSDIUÇGÇLFJHKFHJKFHJKF\",\n    \"client_secret\": \"DULFJGÇGJKFLHJÇGJLJGLF\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete an existing account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e955515c-18e8-4599-b1dd-8c5d3156dba6",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete an unexisting account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "67c7c8cd-5753-42de-b042-8dad17a43eb8",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts/300",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts",
+										"300"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read one existing account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1c70e80d-9289-4067-9270-7273839151e5",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read one unexisting account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "6d3b606e-2969-46cc-843e-71dcb5aa1c6a",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts/100",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read all user accounts",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e358dacd-d62d-40b8-aa69-cdb55f1e208d",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update an existing account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f85a52a1-91f3-4dab-be49-02981b8feb07",
+										"exec": [
+											"pm.test(\"Status test\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"account_id\": 1,\n    \"name\": \"Apple Account Updated\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/users/1/accounts/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"users",
+										"1",
+										"accounts",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "Create User",
 					"event": [
 						{
@@ -90,2186 +2777,6 @@
 							"path": [
 								"api",
 								"users"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Account",
-			"item": [
-				{
-					"name": "Create account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e64ccc93-b457-4133-b65c-f6e616f01015",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Apple Account\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"sync_frequency\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create same account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "fd9490c1-a909-4da1-b2c9-6bd83fc1cf90",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(409);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Apple Account\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"sync_frequency\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create another account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3a8ebcb0-2609-4ca2-893b-8b5a64fb1486",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Another Account\",\n    \"provider\": \"Coiso\",\n    \"user_id\": 1,\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"sync_frequency\": 1,\n    \"client_id\": \"asgsjsthjsrtjstydkduykf\",\n    \"client_secret\": \"arghsfdjsrthtyjtrhstdj\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create a third account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "bda228ea-d1ec-4780-b1f9-2be7c6639802",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Another Account temp test\",\n    \"provider\": \"Coisaozucho\",\n    \"user_id\": 1,\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"sync_frequency\": 1,\n    \"client_id\": \"aeryne58emotumotumuymyi\",\n    \"client_secret\": \"ryuiyuormyuemryoigmumoiydinyuf\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an existing account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e955515c-18e8-4599-b1dd-8c5d3156dba6",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an unexisting account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "67c7c8cd-5753-42de-b042-8dad17a43eb8",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/300",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"300"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one existing account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1c70e80d-9289-4067-9270-7273839151e5",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one unexisting account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "6d3b606e-2969-46cc-843e-71dcb5aa1c6a",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"100"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read all user accounts",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "e358dacd-d62d-40b8-aa69-cdb55f1e208d",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an existing account",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f85a52a1-91f3-4dab-be49-02981b8feb07",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Another Account now more awesome\",\n    \"provider\": \"Coiso\",\n    \"user_id\": 1,\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"sync_frequency\": 1,\n    \"client_id\": \"joaovbmdias@icloud.com\",\n    \"client_secret\": \"\",\n    \"account_id\": 2\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"2"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Event",
-			"item": [
-				{
-					"name": "Create event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a4058f24-daac-4394-b74e-32ca1faad179",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Awesome Event\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create same event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "1c7f74f0-1e32-4da1-ac26-1b1b6bec743f",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(409);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Awesome Event\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create another event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c5b42ff3-a50d-421a-a501-593b01a100f9",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Awesome Event berlaites\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghdlasgnkbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create a third event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "392c5bbb-62b5-45f5-a7bc-3e284bed4974",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Awesome Event berlindes\",\n    \"start_datetime\": \"2020-05-22 20:00\",\n    \"end_datetime\": \"2020-05-22 22:00\",\n    \"guid\": \"arghullkghjkhjkgkqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an existing event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "24a4b9b5-b821-4af6-9ffc-e36faf0cc6d6",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an unexisting event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "0451e2f1-b7c6-4b3a-b595-e84167e49d70",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events/300",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events",
-								"300"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one existing event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "16bfe03f-342e-411f-aee6-b2edd165dc7f",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one unexisting event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "8907edc7-a065-47e7-8f64-eb8c1b33f9c3",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events/100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events",
-								"100"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read all user events",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9063b071-c4ae-4b97-a78e-c68c704305e4",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an existing event",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "ce06c6aa-b58c-4d5f-a9d7-c9fce8bee826",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Evento Berlindes\",\n    \"guid\": \"sdagalihdgahgpsbgbPFbp\",\n    \"start_datetime\": \"2020-05-22 22:00\",\n    \"end_datetime\": \"2020-05-22 23:00\",\n    \"account_id\": 1,\n    \"event_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/events/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"events",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Project",
-			"item": [
-				{
-					"name": "Create project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "dd7ec291-de80-4ded-b1bd-2baf83dde575",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Awesome Project\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create same project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "8e356fce-b1af-417f-b60f-a8a87a2e2b1b",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(409);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Awesome Project\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create another project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d535687e-bc9c-4ac2-8948-edbc284b089d",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"An Even more awesome Project\",\n    \"guid\": \"adfhsdykluiglçoçõuryirtyuetutrh\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create a third project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c87b7cdd-b4d9-4f89-9715-c43381fb5ca9",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Cool awesome Project\",\n    \"guid\": \"sykt5ywtrshatrusns\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an existing project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "dc07f008-73f3-4bb7-a750-27c797d7dab6",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an unexisting project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f942d680-bac8-4e0e-bbb7-07a32c16e049",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/300",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"300"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one existing project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "6f73094b-9b99-438a-8665-7664c016fd3b",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one unexisting project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9081a847-77b6-44e5-bc1a-ba197fa7780b",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"100"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read all user projects",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "cb62a7a3-2a20-4c89-af1e-8b24c8a0e2f0",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an existing project",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "eac80412-8cd1-4f2f-8dcf-68614ce0e12e",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Awesome Project Updated\",\n    \"guid\": \"arghdlaijsbfzsdjhgfoqeiugtoiweg\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Task",
-			"item": [
-				{
-					"name": "Create task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "21262596-13d7-41b8-8b30-5e8c98996266",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing task\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create same task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "de9b7b2d-54ed-4c26-a5a0-49d519a04fab",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(409);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing task\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create another task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "9aed09ae-fea9-478a-a039-881534f1bd9d",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing taskarooney\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"sftjklkjskduk\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create a third task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "011d07f0-44e5-4fc1-95fe-d4837f1ca7a8",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing Wonderful\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"adhsjkdutsjstykstj\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an existing task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "86a158a2-c612-4c8c-b544-4f166caf78d0",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an unexisting task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "22d20ee9-53e9-47b9-b869-2491bbb78d68",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/300",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks",
-								"300"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one existing task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "c885a26f-9e5b-4233-bdb3-91ce2327fd56",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one unexisting task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "a98f0f56-2eec-49b0-9e29-cc1bd781917b",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks",
-								"100"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read all user tasks",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "12f5fb67-1a80-4ff1-a1e4-c682ff89db8b",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an existing task",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "eaf67771-285f-4aae-90a2-38b6e016330f",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"task_id\": 1,\n    \"title\": \"Amazing task updated\",\n    \"project_id\": 1,\n    \"due_datetime\": \"2020-05-29 20:00\",\n    \"priority\": 1,\n    \"guid\": \"asdvakjfhvaskfasvfkasvfkjasv\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/projects/1/tasks/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"projects",
-								"1",
-								"tasks",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"protocolProfileBehavior": {}
-		},
-		{
-			"name": "Label",
-			"item": [
-				{
-					"name": "Create label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "3fbb3310-04ec-440a-bf7c-5b38531dee2c",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create same label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "20a43d3d-bb12-45c3-b4ee-f47aafd6b7cf",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(409);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create another label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "d984970f-32a0-490f-9bfe-8c9b52d0fb6e",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Better label\",\n    \"guid\": \"qgmkopdkmqwrqr3j3jiopjwe\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create a third label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "2f6b5331-2c58-411a-9baf-70c8a5df3595",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Greater label\",\n    \"guid\": \"er3trtuiiuouyuk78i787\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an existing label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "299fe2a8-bc1e-4ca3-8658-3f02b3b823c5",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete an unexisting label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "14bf1bb7-9b71-4f97-8712-eccce02e32f1",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels/300",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels",
-								"300"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one existing label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "f51c3aff-07ec-46bd-aa32-2e6e01d6b0d1",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read one unexisting label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "fdc3195c-4f75-41c7-a511-f35482cbb3bb",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(404);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels/100",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels",
-								"100"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Read all user labels",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "cd77fae4-4ca7-46b9-9446-d71b4dbb1ac4",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update an existing label",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"id": "76ddf980-a0a9-43ee-9297-20a3408223cb",
-								"exec": [
-									"pm.test(\"Status test\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Amazing label updated\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"api",
-								"users",
-								"1",
-								"accounts",
-								"1",
-								"labels",
-								"1"
 							]
 						}
 					},

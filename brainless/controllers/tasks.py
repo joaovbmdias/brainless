@@ -19,30 +19,15 @@ def create(user_id, account_id, project_id, task):
     :return: 201 on success, 409 on task already exists
     """
 
-    # get provided task guid
-    guid = task.get('guid')
+    schema = TaskSchema()
+    new_task = schema.load(task)
 
-    # validate if an task with the provided data exists
-    existing_task = (Task.query.filter(Task.guid == guid)
-                                  .filter(Task.project_id == project_id)
-                                  .one_or_none())
-
-    if existing_task is None:
-        schema = TaskSchema()
-
-        # Create a task instance using the schema and the passed-in task
-        new_task = schema.load(task)
-
-        # Add the task to the database
-        db.session.add(new_task)
-
-        db.session.commit()
-
-        # return the newly created task id in the response
-        return new_task.task_id , 201
-
+    if new_task.create() is None:
+        abort(409, f'Task {new_task.name} already exists')
     else:
-        abort(409, f'Task {guid} already exists for project {project_id}')
+        task_serialized = schema.dump(new_task)
+
+        return task_serialized, 201
 
 def read(user_id, account_id, project_id, task_id):
     """
@@ -55,16 +40,17 @@ def read(user_id, account_id, project_id, task_id):
     :return: 200 on success, 404 on task already exists
     """
 
-    try:
-        # get task if it exists
-        existing_task = Task.query.filter(Task.task_id == task_id).one()
-    except NoResultFound:
+    task = Task(task_id=task_id)
+
+    read_task = task.read()
+
+    if read_task is None:
         abort(404, f'Task with id:{task_id} not found')
+    else:
+        schema = TaskSchema()
+        task_serialized = schema.dump(read_task)
 
-    schema = TaskSchema()
-    task = schema.dump(existing_task)
-
-    return task, 200
+        return task_serialized, 200
 
 def search(user_id, account_id, project_id):
     """
@@ -76,7 +62,6 @@ def search(user_id, account_id, project_id):
     :return: 200 on success, 404 on no tasks found
     """
 
-    # search tasks for the user and acount ids provided
     existing_tasks = Task.query.filter(Task.project_id == project_id).all()
     if existing_tasks is None:
         abort(404, f'No tasks found')
@@ -98,25 +83,17 @@ def update(user_id, account_id, project_id, task_id, task):
     :return: 200 on success, 404 on task not found
     """
 
-    try:
-        # validate if task exists
-        existing_task = Task.query.filter(Task.task_id == task_id).one()    
-    except NoResultFound:
-        abort(404, f'Task {task_id} not found')
-    
     schema = TaskSchema()
+    task_to_update = schema.load(task)
 
-    # Create an task instance using the schema and the passed-in task
-    updated_task = schema.load(task)
+    updated_task = task_to_update.update()
 
-    # Set the id to the task we want to update
-    updated_task.task_id = existing_task.task_id
+    if updated_task is None:
+        abort(404, f'Task {task_id} not found')
+    else:
+        task_serialized = schema.dump(updated_task)
 
-    # Add the task to the database
-    db.session.merge(updated_task)
-    db.session.commit()
-
-    return "Task updated", 200
+        return task_serialized, 200
 
 def delete(user_id, account_id, project_id, task_id):
     """
@@ -129,14 +106,9 @@ def delete(user_id, account_id, project_id, task_id):
     :return: 200 on success, 404 on task not found
     """
 
-    try:
-        # validate if task exists
-        existing_task = Task.query.filter(Task.task_id == task_id).one()
-    except NoResultFound:
+    task_to_delete = Task(task_id=task_id)
+
+    if task_to_delete.delete() is not None:
         abort(404, f'Task {task_id} not found')
-
-    # Add the task to the database
-    db.session.delete(existing_task)
-    db.session.commit()
-
-    return "Task deleted", 200
+    else:
+        return "Task deleted", 200

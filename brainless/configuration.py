@@ -2,8 +2,7 @@
 Configuration module for the Brainless application
 Contains all globally used contants and objects
 """
-import os
-import connexion
+import os, connexion
 from flask_sqlalchemy import SQLAlchemy
 
 # providers
@@ -20,7 +19,9 @@ CONST_OAUTH='OAUTH2'
 CONST_USERPASS='USERPASS'
 
 # configurations
-CONST_PERIOD = 10
+CONST_SYNC_DAYS = 7
+
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

@@ -7,8 +7,11 @@ from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from configuration import db
 from models.account import Account
+from models.template import Template
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import or_
 
-class User(db.Model):
+class User(db.Model, Template):
     """ User class """
     __tablename__ = 'user'
 
@@ -22,14 +25,14 @@ class User(db.Model):
     
     accounts = db.relationship('Account', backref='user', lazy=True)
 
-    def __init__(self, username, password, first_name=None, last_name=None):
-        self.user_id = None
-        self.username = username
-        self.password = password
-        self.first_name = first_name
-        self.last_name = last_name
-        self.__created_timestamp = datetime.utcnow
-        self.__edited_timestamp = datetime.utcnow
+    def exists(self):
+
+        try:
+            existing_user = User.query.filter(or_(User.username == self.username, User.user_id == self.user_id)).one() 
+        except NoResultFound:
+            return None
+
+        return existing_user
 
 class UserSchema(SQLAlchemyAutoSchema):
     """ UserSchema class """

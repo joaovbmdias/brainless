@@ -5,7 +5,6 @@ This is the labels module and supports all the ReST actions for LABELS
 from flask import abort
 from configuration import db
 from models.label import Label, LabelSchema
-from sqlalchemy.orm.exc import NoResultFound
 
 def create(user_id, account_id, label):
     """
@@ -18,31 +17,15 @@ def create(user_id, account_id, label):
     :return: 201 on success, 409 on label already exists
     """
 
-    # get provided label guid
-    guid = label.get('guid')
+    schema = LabelSchema()
+    new_label = schema.load(label)
 
-    # validate if a label with the provided data exists
-    existing_label = (Label.query.filter(Label.account_id == account_id)
-                                 .filter(Label.guid == guid)
-                                 .one_or_none())
-
-    if existing_label is None:
-
-        schema = LabelSchema()
-
-        # Create a label instance using the schema and the passed-in label
-        new_label = schema.load(label)
-
-        # Add the label to the database
-        db.session.add(new_label)
-
-        db.session.commit()
-
-        # return the newly created label id in the response
-        return new_label.label_id , 201
-
+    if new_label.create() is None:
+        abort(409, f'Label {new_label.name} already exists')
     else:
-        abort(409, f'Label {guid} already exists for account {account_id}')
+        label_serialized = schema.dump(new_label)
+
+        return label_serialized, 201
 
 def read(user_id, account_id, label_id):
     """
@@ -54,16 +37,17 @@ def read(user_id, account_id, label_id):
     :return: 200 on success, 404 on label already exists
     """
 
-    try:
-        # get label if it exists
-        existing_label = Label.query.filter(Label.label_id == label_id).one()
-    except NoResultFound:
+    label = Label(label_id=label_id)
+
+    read_label = label.read()
+
+    if read_label is None:
         abort(404, f'Label with id:{label_id} not found')
+    else:
+        schema = LabelSchema()
+        label_serialized = schema.dump(read_label)
 
-    schema = LabelSchema()
-    label = schema.dump(existing_label)
-
-    return label, 200
+        return label_serialized, 200
 
 def search(user_id, account_id):
     """
@@ -74,7 +58,6 @@ def search(user_id, account_id):
     :return: 200 on success, 404 on no labels found
     """
 
-    # search labels for the user and acount ids provided
     existing_labels = Label.query.filter(Label.account_id == account_id).all()
     if existing_labels is None:
         abort(404, f'No labels found')
@@ -95,25 +78,17 @@ def update(user_id, account_id, label_id, label):
     :return: 200 on success, 404 on label not found
     """
 
-    try:
-        # validate if label exists
-        existing_label = Label.query.filter(Label.label_id == label_id).one()    
-    except NoResultFound:
-        abort(404, f'Label {label_id} not found')
-    
     schema = LabelSchema()
+    label_to_update = schema.load(label)
 
-    # Create an label instance using the schema and the passed-in label
-    updated_label = schema.load(label)
+    updated_label = label_to_update.update()
 
-    # Set the id to the label we want to update
-    updated_label.label_id = existing_label.label_id
+    if updated_label is None:
+        abort(404, f'Label {label_id} not found')
+    else:
+        label_serialized = schema.dump(updated_label)
 
-    # Add the label to the database
-    db.session.merge(updated_label)
-    db.session.commit()
-
-    return "Label updated", 200
+        return label_serialized, 200
 
 def delete(user_id, account_id, label_id):
     """
@@ -125,14 +100,9 @@ def delete(user_id, account_id, label_id):
     :return: 200 on success, 404 on label not found
     """
 
-    try:
-        # validate if label exists
-        existing_label = Label.query.filter(Label.label_id == label_id).one()
-    except NoResultFound:
+    label_to_delete = Label(label_id=label_id)
+
+    if label_to_delete.delete() is not None:
         abort(404, f'Label {label_id} not found')
-
-    # Add the label to the database
-    db.session.delete(existing_label)
-    db.session.commit()
-
-    return "Label deleted", 200
+    else:
+        return "Label deleted", 200

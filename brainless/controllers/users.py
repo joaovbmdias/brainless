@@ -16,83 +16,12 @@ def create(user):
     :return:     201 on success, 406 on user already exists
     """
 
-    # get provided username and validate if already exists
-    username = user.get('username')
-    existing_user = User.query.filter(User.username == username).one_or_none()
+    schema = UserSchema()
+    new_user = schema.load(user)
 
-    if existing_user is None:
-        # create a user instance using the schema and the passed-in user
-        schema = UserSchema()
-        new_user = schema.load(user)
-
-        # add the person to the database
-        db.session.add(new_user)
-        db.session.commit()
-
-        # return the newly created person in the response
-        return schema.dump(new_user), 201
-
+    if new_user.create() is None:
+        abort(409, f'User {new_user.username} already exists')
     else:
-        abort(409, f'User {username} already exists')
+        user_serialized = schema.dump(new_user)
 
-def read():
-    """ This function retrieves one user data """
-    
-    #searches the database
-    print("hello")
-
-# def read_all():
-#     """ Retrieves all users """
-#     print('hello')
-
-# def update():
-#     """ Update one user """
-#     print('hello')
-
-# def delete():
-#     """ Deletes one user """
-#     print('hello')
-
-    # def create(self):
-    #     """" Method for creating one user """
-    #     session = Session()
-
-    #     existing_user = session.query(User).filter(User.username == self.username).one_or_none()
-
-    #     if existing_user is not None:
-    #         session.rollback()
-    #         raise Exception('Username {} already exists.'.format(self.username))
-
-    #     # Add the event to the database
-    #     session.add(self)
-    #     session.commit()
-
-    # def delete(self):
-    #     """" Method for deleting one user """
-    #     try:
-    #         session = Session()
-
-    #         session.query(User).filter(User.username == self.username).one()
-
-    #         # Add the event to the database
-    #         session.delete(self)
-    #         session.commit()
-
-    #     except NoResultFound:
-    #         session.rollback()
-    #         print('User {} not found'.format(self.username))
-
-    # def get(self):
-    #     """" Method for retrieving one user """
-    #     try:
-    #         session = Session()
-
-    #         existing_user = (session.query(User).filter(User.username == self.username)
-    #                          .filter(User.password == self.password)
-    #                          .one())
-
-    #         return existing_user
-
-    #     except NoResultFound:
-    #         session.rollback()
-    #         print('Username {} not found'.format(self.username))
+        return user_serialized, 201

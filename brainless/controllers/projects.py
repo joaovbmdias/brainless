@@ -5,7 +5,6 @@ This is the project module and supports all the ReST actions for PROJECTS
 from flask import abort
 from configuration import db
 from models.project import Project, ProjectSchema
-from sqlalchemy.orm.exc import NoResultFound
 
 def create(user_id, account_id, project):
     """
@@ -18,30 +17,15 @@ def create(user_id, account_id, project):
     :return: 201 on success, 409 on project already exists
     """
 
-    # get provided project guid
-    guid = project.get('guid')
+    schema = ProjectSchema()
+    new_project = schema.load(project)
 
-    # validate if an project with the provided data exists
-    existing_project = (Project.query.filter(Project.guid == guid)
-                                     .filter(Project.account_id == account_id)
-                                     .one_or_none())
-
-    if existing_project is None:
-        schema = ProjectSchema()
-
-        # Create a project instance using the schema and the passed-in project
-        new_project = schema.load(project)
-
-        # Add the project to the database
-        db.session.add(new_project)
-
-        db.session.commit()
-
-        # return the newly created project id in the response
-        return new_project.project_id , 201
-
+    if new_project.create() is None:
+        abort(409, f'Project {new_project.name} already exists')
     else:
-        abort(409, f'Project {guid} already exists for account {account_id}')
+        project_serialized = schema.dump(new_project)
+
+        return project_serialized, 201
 
 def read(user_id, account_id, project_id):
     """
@@ -53,16 +37,17 @@ def read(user_id, account_id, project_id):
     :return: 200 on success, 404 on project already exists
     """
 
-    try:
-        # get project if it exists
-        existing_project = Project.query.filter(Project.project_id == project_id).one()
-    except NoResultFound:
+    project = Project(project_id=project_id)
+
+    read_project = project.read()
+
+    if read_project is None:
         abort(404, f'Project with id:{project_id} not found')
+    else:
+        schema = ProjectSchema()
+        project_serialized = schema.dump(read_project)
 
-    schema = ProjectSchema()
-    project = schema.dump(existing_project)
-
-    return project, 200
+        return project_serialized, 200
 
 def search(user_id, account_id):
     """
@@ -73,7 +58,6 @@ def search(user_id, account_id):
     :return: 200 on success, 404 on no projects found
     """
 
-    # search projects for the user and acount ids provided
     existing_projects = Project.query.filter(Project.account_id == account_id).all()
     if existing_projects is None:
         abort(404, f'No projects found')
@@ -94,25 +78,17 @@ def update(user_id, account_id, project_id, project):
     :return: 200 on success, 404 on project not found
     """
 
-    try:
-        # validate if project exists
-        existing_project = Project.query.filter(Project.project_id == project_id).one()    
-    except NoResultFound:
-        abort(404, f'Project {project_id} not found')
-    
     schema = ProjectSchema()
+    project_to_update = schema.load(project)
 
-    # Create an project instance using the schema and the passed-in project
-    updated_project = schema.load(project)
+    updated_project = project_to_update.update()
 
-    # Set the id to the project we want to update
-    updated_project.project_id = existing_project.project_id
+    if updated_project is None:
+        abort(404, f'Project {project_id} not found')
+    else:
+        project_serialized = schema.dump(updated_project)
 
-    # Add the project to the database
-    db.session.merge(updated_project)
-    db.session.commit()
-
-    return "Project updated", 200
+        return project_serialized, 200
 
 def delete(user_id, account_id, project_id):
     """
@@ -124,14 +100,9 @@ def delete(user_id, account_id, project_id):
     :return: 200 on success, 404 on project not found
     """
 
-    try:
-        # validate if project exists
-        existing_project = Project.query.filter(Project.project_id == project_id).one()
-    except NoResultFound:
+    project_to_delete = Project(project_id=project_id)
+
+    if project_to_delete.delete() is not None:
         abort(404, f'Project {project_id} not found')
-
-    # Add the project to the database
-    db.session.delete(existing_project)
-    db.session.commit()
-
-    return "Project deleted", 200
+    else:
+        return "Project deleted", 200

@@ -5,7 +5,6 @@ This is the calendar module and supports all the ReST actions for CALENDARS
 from flask import abort
 from configuration import db
 from models.calendar import Calendar, CalendarSchema
-from sqlalchemy.orm.exc import NoResultFound
 
 def create(user_id, account_id, calendar):
     """
@@ -18,30 +17,15 @@ def create(user_id, account_id, calendar):
     :return: 201 on success, 409 on calendar already exists
     """
 
-    # get provided calendar guid
-    guid = calendar.get('guid')
+    schema = CalendarSchema()
+    new_calendar = schema.load(calendar)
 
-    # validate if a calendar with the provided data exists
-    existing_calendar = (Calendar.query.filter(Calendar.guid == guid)
-                                    .filter(Calendar.account_id == account_id)
-                                    .one_or_none())
-
-    if existing_calendar is None:
-        schema = CalendarSchema()
-
-        # create a calendar instance using the schema and the passed-in calendar
-        new_calendar = schema.load(calendar)
-
-        # add the calendar to the database
-        db.session.add(new_calendar)
-
-        db.session.commit()
-
-        # return the newly created calendar id in the response
-        return new_calendar.calendar_id , 201
-
-    else:
+    if new_calendar.create() is None:
+        guid = calendar.get('guid')
         abort(409, f'Calendar {guid} already exists for account {account_id}')
+    
+    else:
+        return new_calendar.calendar_id , 201
 
 def read(user_id, account_id, calendar_id):
     """
@@ -53,16 +37,17 @@ def read(user_id, account_id, calendar_id):
     :return: 200 on success, 404 on calendar already exists
     """
 
-    try:
-        # get calendar if it exists
-        existing_calendar = Calendar.query.filter(Calendar.calendar_id == calendar_id).one()
-    except NoResultFound:
+    calendar = Calendar(calendar_id=calendar_id)
+
+    read_calendar = calendar.read()
+
+    if read_calendar is None:
         abort(404, f'Calendar with id:{calendar_id} not found')
+    else:
+        schema = CalendarSchema()
+        calendar_serialized = schema.dump(read_calendar)
 
-    schema = CalendarSchema()
-    calendar = schema.dump(existing_calendar)
-
-    return calendar, 200
+        return calendar_serialized, 200
 
 def search(user_id, account_id):
     """
@@ -73,7 +58,6 @@ def search(user_id, account_id):
     :return: 200 on success, 404 on no calendars found
     """
 
-    # search calendars for the user and acount ids provided
     existing_calendars = Calendar.query.filter(Calendar.account_id == account_id).all()
     if existing_calendars is None:
         abort(404, f'No calendars found')
@@ -94,25 +78,15 @@ def update(user_id, account_id, calendar_id, calendar):
     :return: 200 on success, 404 on calendar not found
     """
 
-    try:
-        # validate if calendar exists
-        existing_calendar = Calendar.query.filter(Calendar.calendar_id == calendar_id).one()    
-    except NoResultFound:
-        abort(404, f'Calendar {calendar_id} not found')
-    
     schema = CalendarSchema()
+    calendar_to_update = schema.load(calendar)
 
-    # Create an calendar instance using the schema and the passed-in calendar
-    updated_calendar = schema.load(calendar)
+    updated_calendar = calendar_to_update.update()
 
-    # Set the id to the calendar we want to update
-    updated_calendar.calendar_id = existing_calendar.calendar_id
-
-    # Add the calendar to the database
-    db.session.merge(updated_calendar)
-    db.session.commit()
-
-    return "Calendar updated", 200
+    if updated_calendar is None:
+        abort(404, f'Calendar {calendar_id} not found')
+    else:
+        return schema.dump(updated_calendar), 200
 
 def delete(user_id, account_id, calendar_id):
     """
@@ -124,14 +98,9 @@ def delete(user_id, account_id, calendar_id):
     :return: 200 on success, 404 on calendar not found
     """
 
-    try:
-        # validate if calendar exists
-        existing_calendar = Calendar.query.filter(Calendar.calendar_id == calendar_id).one()
-    except NoResultFound:
+    calendar_to_delete = Calendar(calendar_id=calendar_id)
+
+    if calendar_to_delete.delete() is not None:
         abort(404, f'Calendar {calendar_id} not found')
-
-    # Add the calendar to the database
-    db.session.delete(existing_calendar)
-    db.session.commit()
-
-    return "Calendar deleted", 200
+    else:
+        return "Calendar deleted", 200

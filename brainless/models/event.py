@@ -1,8 +1,11 @@
 from datetime import datetime
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from configuration import db
+from models.template import Template
+from sqlalchemy import or_, and_
+from sqlalchemy.orm.exc import NoResultFound
 
-class Event(db.Model):
+class Event(db.Model, Template):
     """ Event class """
     __tablename__ = 'event'
 
@@ -15,15 +18,16 @@ class Event(db.Model):
     created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    def __init__(self, name, start_datetime, end_datetime, guid, calendar_id):
-        self.event_id = None
-        self.name = name
-        self.start_datetime = start_datetime
-        self.end_datetime = end_datetime
-        self.guid = guid
-        self.calendar_id = calendar_id
-        self.__created_timestamp = datetime.utcnow
-        self.__edited_timestamp  = datetime.utcnow
+    def exists(self):
+
+        try:
+            existing_event = Event.query.filter(or_(Event.event_id == self.event_id, 
+                                                    and_(Event.guid == self.guid, 
+                                                        Event.calendar_id == self.calendar_id))).one()   
+        except NoResultFound:
+            return None
+
+        return existing_event
 
 class EventSchema(SQLAlchemyAutoSchema):
     """ EventSchema class """

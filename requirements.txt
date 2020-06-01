@@ -6,4 +6,5 @@ flask-marshmallow
 marshmallow-sqlalchemy
 marshmallow
 connexion[swagger-ui]
-python-crontab
+#python-crontab
+continuous_threading
