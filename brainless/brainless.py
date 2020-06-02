@@ -4,23 +4,19 @@ Brainless launcher
 
 from flask import render_template
 from configuration import app, db
-from models.account import Account
 from datetime import datetime
-import time, continuous_threading
+import continuous_threading
+from daemons.sync import sync_accounts
 
 # Create a URL route in our application for "/"
 @app.route('/')
-
-def sync():
-    time.sleep(5)
-    print('SSSYYYYYNNNNNCCC')
 
 def brainless():
     time.sleep(5)
     print('BBRRRAAAIIIINNNNSSSS')
 
 # background workder daemons
-sync_daemon = continuous_threading.PausableThread(target=sync)
+sync_daemon = continuous_threading.PeriodicThread(10.0,target=sync_accounts)
 brainless_daemon = continuous_threading.PausableThread(target=brainless)
 
 def startup():

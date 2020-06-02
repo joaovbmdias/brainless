@@ -1,0 +1,16 @@
+# providers
+CONST_APPLE = 'APPLE'
+CONST_GOOGLE = 'GOOGLE'
+CONST_DOIST = 'DOIST'
+
+# account types
+CONST_CALENDAR = 'CALENDAR'
+CONST_TASK = 'TASK'
+CONST_ALL_DATA = 'ALL_DATA'
+
+# authentication types
+CONST_OAUTH='OAUTH2'
+CONST_USERPASS='USERPASS'
+
+# configurations
+CONST_SYNC_DAYS = 7

@@ -37,7 +37,11 @@ def read(user_id, account_id, label_id):
     :return: 200 on success, 404 on label already exists
     """
 
-    label = Label(label_id=label_id)
+    label = Label(id=label_id,
+                  name=None,
+                  guid=None,
+                  account_id=None,
+                  brain_enabled='Y')
 
     read_label = label.read()
 
@@ -63,9 +67,9 @@ def search(user_id, account_id):
         abort(404, f'No labels found')
 
     schema = LabelSchema(many=True)
-    labels = schema.dump(existing_labels)
+    labels_serialized = schema.dump(existing_labels)
 
-    return labels, 200
+    return labels_serialized, 200
 
 def update(user_id, account_id, label_id, label):
     """
@@ -100,7 +104,11 @@ def delete(user_id, account_id, label_id):
     :return: 200 on success, 404 on label not found
     """
 
-    label_to_delete = Label(label_id=label_id)
+    label_to_delete = Label(id=label_id,
+                            name=None,
+                            guid=None,
+                            account_id=None,
+                            brain_enabled='Y')
 
     if label_to_delete.delete() is not None:
         abort(404, f'Label {label_id} not found')

@@ -13,18 +13,25 @@ class Label(db.Model, Template):
     """ Label class """
     __tablename__ = 'label'
 
-    label_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
     guid = db.Column(db.String(32), nullable=False)
     account_id = db.Column(db.Integer, nullable=False)
     brain_enabled = db.Column(db.String(1), nullable=False, default='Y')
-    created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    edited_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    __created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    __edited_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     
+    def __init__(self, name, guid, account_id, brain_enabled='Y', id=None):
+        self.name = name
+        self.guid = guid
+        self.account_id = account_id
+        self.brain_enabled = brain_enabled
+        self.id = id
+
     def exists(self):
 
         try:
-            existing_label = Label.query.filter(or_(Label.label_id == self.label_id, 
+            existing_label = Label.query.filter(or_(Label.id == self.id, 
                                                     and_(Label.guid == self.guid, 
                                                          Label.account_id == self.account_id))).one()   
         except NoResultFound:

@@ -5,7 +5,6 @@ This is the user module and supports all the ReST actions for USERS
 from flask import abort
 from configuration import db
 from models.user import User, UserSchema
-from sqlalchemy.orm.exc import NoResultFound
 
 def create(user):
     """

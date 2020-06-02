@@ -19,6 +19,8 @@ def create(user_id, account):
     schema = AccountSchema()
     new_account = schema.load(account)
 
+    new_account.provider = new_account.provider.upper()
+
     if new_account.create() is None:
         abort(409, f'Account {new_account.name} already exists')
     else:
@@ -35,7 +37,15 @@ def read(user_id, account_id):
     :return: 200 on success, 404 on account already exists
     """
 
-    account = Account(account_id=account_id)
+    account = Account(id=account_id, 
+                      name=None,
+                      account_type=None,
+                      authentication_type=None,
+                      provider=None,
+                      user_id=None,
+                      client_id=None,
+                      client_secret=None,
+                      sync_frequency=None)
 
     read_account = account.read()
 
@@ -60,9 +70,9 @@ def search(user_id):
         abort(404, f'No accounts found')
 
     schema = AccountSchema(many=True)
-    accounts = schema.dump(existing_accounts)
+    accounts_serialized = schema.dump(existing_accounts)
 
-    return accounts, 200
+    return accounts_serialized, 200
 
 def update(user_id, account_id, account):
     """
@@ -95,7 +105,15 @@ def delete(user_id, account_id):
     :return: 200 on success, 404 on account not found
     """
 
-    account_to_delete = Account(account_id=account_id)
+    account_to_delete = Account(id=account_id, 
+                                name=None,
+                                account_type=None,
+                                authentication_type=None,
+                                provider=None,
+                                user_id=None,
+                                client_id=None,
+                                client_secret=None,
+                                sync_frequency=None)
 
     if account_to_delete.delete() is not None:
         abort(404, f'Account {account_id} not found')

@@ -14,19 +14,26 @@ class Project(db.Model, Template):
     """ Project class """
     __tablename__ = 'project'
 
-    project_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
     guid = db.Column(db.String(32), nullable=False)
-    account_id = db.Column(db.Integer, db.ForeignKey('account.account_id'), nullable=False)
+    account_id = db.Column(db.Integer, db.ForeignKey('account.id'), nullable=False)
     brain_enabled = db.Column(db.String(1), nullable=False, default='Y')
-    created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    edited_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    __created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    __edited_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     tasks = db.relationship('Task', backref='project', lazy=True)
 
+    def __init__(self, name, guid, account_id, brain_enabled='Y', id=None):
+        self.name = name
+        self.guid = guid
+        self.account_id = account_id
+        self.brain_enabled = brain_enabled
+        self.id = id
+
     def exists(self):
         try:
-            existing_project = Project.query.filter(or_(Project.project_id == self.project_id, 
+            existing_project = Project.query.filter(or_(Project.id == self.id, 
                                                          and_(Project.guid == self.guid, 
                                                               Project.account_id == self.account_id))).one()   
         except NoResultFound:

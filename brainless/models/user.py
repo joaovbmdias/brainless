@@ -15,20 +15,27 @@ class User(db.Model, Template):
     """ User class """
     __tablename__ = 'user'
 
-    user_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32), nullable=False, unique=True)
     password = db.Column(db.String(32), nullable=False)
     first_name = db.Column(db.String(32), nullable=True)
     last_name = db.Column(db.String(32), nullable=True)
-    created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    __created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    __edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     accounts = db.relationship('Account', backref='user', lazy=True)
+
+    def __init__(self, username, password, first_name, last_name, id=None):
+        self.username = username
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
+        self.id = id
 
     def exists(self):
 
         try:
-            existing_user = User.query.filter(or_(User.username == self.username, User.user_id == self.user_id)).one() 
+            existing_user = User.query.filter(or_(User.username == self.username, User.id == self.id)).one() 
         except NoResultFound:
             return None
 

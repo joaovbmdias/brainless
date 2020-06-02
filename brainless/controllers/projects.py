@@ -37,7 +37,11 @@ def read(user_id, account_id, project_id):
     :return: 200 on success, 404 on project already exists
     """
 
-    project = Project(project_id=project_id)
+    project = Project(id=project_id,
+                      name=None,
+                      guid=None,
+                      account_id=None,
+                      brain_enabled=None)
 
     read_project = project.read()
 
@@ -63,9 +67,9 @@ def search(user_id, account_id):
         abort(404, f'No projects found')
 
     schema = ProjectSchema(many=True)
-    projects = schema.dump(existing_projects)
+    projects_serialized = schema.dump(existing_projects)
 
-    return projects, 200
+    return projects_serialized, 200
 
 def update(user_id, account_id, project_id, project):
     """
@@ -100,7 +104,11 @@ def delete(user_id, account_id, project_id):
     :return: 200 on success, 404 on project not found
     """
 
-    project_to_delete = Project(project_id=project_id)
+    project_to_delete = Project(id=project_id,
+                                name=None,
+                                guid=None,
+                                account_id=None,
+                                brain_enabled=None)
 
     if project_to_delete.delete() is not None:
         abort(404, f'Project {project_id} not found')

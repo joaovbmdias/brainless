@@ -5,7 +5,6 @@ This is the task module and supports all the ReST actions for PROJECTS
 from flask import abort
 from configuration import db
 from models.task import Task, TaskSchema
-from sqlalchemy.orm.exc import NoResultFound
 
 def create(user_id, account_id, project_id, task):
     """
@@ -40,7 +39,12 @@ def read(user_id, account_id, project_id, task_id):
     :return: 200 on success, 404 on task already exists
     """
 
-    task = Task(task_id=task_id)
+    task = Task(id=task_id,
+                name=None,
+                project_id=None,
+                due_datetime=None,
+                priority=None,
+                guid=None)
 
     read_task = task.read()
 
@@ -67,9 +71,9 @@ def search(user_id, account_id, project_id):
         abort(404, f'No tasks found')
 
     schema = TaskSchema(many=True)
-    tasks = schema.dump(existing_tasks)
+    tasks_serialized = schema.dump(existing_tasks)
 
-    return tasks, 200
+    return tasks_serialized, 200
 
 def update(user_id, account_id, project_id, task_id, task):
     """
@@ -106,7 +110,12 @@ def delete(user_id, account_id, project_id, task_id):
     :return: 200 on success, 404 on task not found
     """
 
-    task_to_delete = Task(task_id=task_id)
+    task_to_delete = Task(id=task_id,
+                          name=None,
+                          project_id=None,
+                          due_datetime=None,
+                          priority=None,
+                          guid=None)
 
     if task_to_delete.delete() is not None:
         abort(404, f'Task {task_id} not found')

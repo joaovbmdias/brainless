@@ -25,7 +25,9 @@ def create(user_id, account_id, calendar):
         abort(409, f'Calendar {guid} already exists for account {account_id}')
     
     else:
-        return new_calendar.calendar_id , 201
+        serialized_calendar = schema.dump(new_calendar)
+
+        return serialized_calendar, 201
 
 def read(user_id, account_id, calendar_id):
     """
@@ -37,7 +39,11 @@ def read(user_id, account_id, calendar_id):
     :return: 200 on success, 404 on calendar already exists
     """
 
-    calendar = Calendar(calendar_id=calendar_id)
+    calendar = Calendar(id=calendar_id,
+                        name = None,
+                        guid = None,
+                        account_id = None,
+                        brain_enabled = None)
 
     read_calendar = calendar.read()
 
@@ -63,9 +69,9 @@ def search(user_id, account_id):
         abort(404, f'No calendars found')
 
     schema = CalendarSchema(many=True)
-    calendars = schema.dump(existing_calendars)
+    calendars_serialized = schema.dump(existing_calendars)
 
-    return calendars, 200
+    return calendars_serialized, 200
 
 def update(user_id, account_id, calendar_id, calendar):
     """
@@ -98,7 +104,11 @@ def delete(user_id, account_id, calendar_id):
     :return: 200 on success, 404 on calendar not found
     """
 
-    calendar_to_delete = Calendar(calendar_id=calendar_id)
+    calendar_to_delete = calendar = Calendar(id=calendar_id,
+                                             name = None,
+                                             guid = None,
+                                             account_id = None,
+                                             brain_enabled = None)
 
     if calendar_to_delete.delete() is not None:
         abort(404, f'Calendar {calendar_id} not found')

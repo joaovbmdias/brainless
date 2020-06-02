@@ -18,31 +18,6 @@ paths:
 ###############################################################################################################################
 ###############################################################################################################################
   /users:
-    # get:
-    #   operationID: "users.read"
-    #   tags: 
-    #      - "Users"
-    #   summary: "API operation for user retrieval"
-    #   description: "Reads one user data with provided ID"
-    #   parameters:
-    #     - name: user_id
-    #       in: body
-    #       description: Id of the user to get
-    #       type: integer
-    #       required: True
-    #   responses:
-    #    200:
-          # description: "Successfully read user"
-          # schema:
-          #   type: array
-          #   items:
-          #     properties:
-          #       username:
-          #         type: string
-          #       first_name:
-          #         type: string
-          #       last_name:
-          #         type: string
     post:
       operationId: "users.create"
       tags:
@@ -69,7 +44,18 @@ paths:
         201:
           description: "Successfully created the user"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              username:
+                type: string
+              password:
+                type: string
+              first_name:
+                type: string
+              last_name:
+                type: string
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -101,7 +87,7 @@ paths:
             type: array
             items:
               properties:
-                account_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -136,7 +122,7 @@ paths:
           schema:
             type: object
             properties:
-              account_id:
+              id:
                 type: integer
               name:
                 type: string
@@ -151,6 +137,21 @@ paths:
       responses:
         201:
           description: "Successfully updated the account"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              provider:
+                type: string
+              user_id:
+                type: integer
+              client_id:
+                type: string
+              client_secret:
+                type: string
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "accounts.delete"
@@ -193,7 +194,7 @@ paths:
             type: array
             items:
               properties:
-                account_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -241,8 +242,20 @@ paths:
           schema:
             type: object
             properties:
-              account_id:
+              id:
                 type: integer
+              name:
+                type: string
+              provider:
+                type: string
+              user_id:
+                type: integer
+              account_type:
+                type: string
+              client_id:
+                type: string
+              client_secret:
+                type: string
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -279,7 +292,7 @@ paths:
             type: array
             items:
               properties:
-                calendar_id:
+                id:
                   type: integer
                 account_id:
                   type: integer
@@ -317,7 +330,7 @@ paths:
           schema:
             type: object
             properties:
-              calendar_id:
+              id:
                 type: integer
               account_id:
                 type: integer
@@ -328,6 +341,17 @@ paths:
       responses:
         201:
           description: "Successfully updated the calendar"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "calendars.delete"
@@ -380,7 +404,7 @@ paths:
             type: array
             items:
               properties:
-                calendar_id:
+                id:
                   type: integer
                 account_id:
                   type: integer
@@ -423,7 +447,16 @@ paths:
         201:
           description: "Successfully created the calendar"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -465,6 +498,8 @@ paths:
             type: array
             items:
               properties:
+                id:
+                  type: integer
                 calendar_id:
                   type: integer
                 name:
@@ -510,7 +545,7 @@ paths:
           schema:
             type: object
             properties:
-              event_id:
+              id:
                 type: integer
               name:
                 type: string
@@ -525,6 +560,21 @@ paths:
       responses:
         201:
           description: "Successfully updated the event"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              start_datetime:
+                type: string
+              end_datetime:
+                type: string
+              guid:
+                type: string
+              calendar_id:
+                type: integer
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "events.delete"
@@ -587,6 +637,8 @@ paths:
             type: array
             items:
               properties:
+                id:
+                  type: integer
                 calendar_id:
                   type: integer
                 name:
@@ -641,7 +693,20 @@ paths:
         201:
           description: "Successfully created the event"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              start_datetime:
+                type: string
+              end_datetime:
+                type: string
+              guid:
+                type: string
+              calendar_id:
+                type: integer
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -678,6 +743,8 @@ paths:
             type: array
             items:
               properties:
+                id:
+                 type: integer
                 account_id:
                   type: integer
                 name:
@@ -714,6 +781,8 @@ paths:
           schema:
             type: object
             properties:
+              id:
+                type: integer
               account_id:
                 type: integer
               name:
@@ -723,6 +792,17 @@ paths:
       responses:
         201:
           description: "Successfully updated the project"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "projects.delete"
@@ -775,7 +855,7 @@ paths:
             type: array
             items:
               properties:
-                project_id:
+                id:
                   type: integer
                 account_id:
                   type: integer
@@ -818,7 +898,16 @@ paths:
         201:
           description: "Successfully created the project"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              account_id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -860,7 +949,7 @@ paths:
             type: array
             items:
               properties:
-                task_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -907,7 +996,7 @@ paths:
           schema:
             type: object
             properties:
-              task_id:
+              id:
                 type: integer
               name:
                 type: string
@@ -922,6 +1011,21 @@ paths:
       responses:
         201:
           description: "Successfully updated the task"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              project_id:
+                type: integer
+              due_datetime:
+                type: string
+              priority:
+                type: integer
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "tasks.delete"
@@ -984,7 +1088,7 @@ paths:
             type: array
             items:
               properties:
-                task_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -1040,7 +1144,20 @@ paths:
         201:
           description: "Successfully created the task"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              project_id:
+                type: integer
+              due_datetime:
+                type: string
+              priority:
+                type: integer
+              guid:
+                type: string
       x-swagger-router-controller: "controllers"
 ###############################################################################################################################
 ###############################################################################################################################
@@ -1077,7 +1194,7 @@ paths:
             type: array
             items:
               properties:
-                labek_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -1113,7 +1230,7 @@ paths:
           schema:
             type: object
             properties:
-              label_id:
+              id:
                 type: integer
               name:
                 type: string
@@ -1124,6 +1241,17 @@ paths:
       responses:
         201:
           description: "Successfully updated the label"
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
+              account_id:
+                type: integer
       x-swagger-router-controller: "controllers"
     delete:
       operationId: "labels.delete"
@@ -1176,7 +1304,7 @@ paths:
             type: array
             items:
               properties:
-                label_id:
+                id:
                   type: integer
                 name:
                   type: string
@@ -1217,5 +1345,14 @@ paths:
         201:
           description: "Successfully created the label"
           schema:
-            type: integer
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              guid:
+                type: string
+              account_id:
+                type: integer
       x-swagger-router-controller: "controllers"

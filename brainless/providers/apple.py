@@ -1,12 +1,35 @@
-from configuration import CONST_APPLE
+import constants as const
 from pyicloud import PyiCloudService
-from classes.events import Event
-from classes.users import User
 import datetime
 
-api = PyiCloudService('joaovbmdias@icloud.com')
+def get_calendar_data(api):
+    
+    apple_events = api.calendar.events(datetime.datetime.utcnow(),datetime.datetime.utcnow() + datetime.timedelta(days=const.CONST_SYNC_DAYS))
 
-def connect():
+    calendar_data = {}
+
+    for event in apple_events:
+
+        event_data = {}
+
+        start_data = event['startDate'][1:6]
+        end_data   = event['endDate'][1:6]
+
+        calendar_guid  = event['pGuid']
+        title          = event['title']
+        start_datetime = datetime.datetime(start_data[0],start_data[1],start_data[2],start_data[3],start_data[4],0)
+        end_datetime   = datetime.datetime(end_data[0],end_data[1],end_data[2],end_data[3],end_data[4],0)
+        guid           = event['guid']
+
+        event_data = {"title": title, "start_datetime": start_datetime, "end_datetime": end_datetime, "guid": guid}
+        calendar_data.setdefault(calendar_guid, []).append(event_data)
+    
+    return calendar_data
+
+def get_reminders_data(account):
+    return None
+
+def connect(api):
 
     import click
 
@@ -26,27 +49,26 @@ def connect():
     if not api.validate_verification_code(device, code):
         print("Failed to verify verification code")
 
-def get_events(user, range):
+def keep_alive(api):
+    api.authenticate()
+
+def get_data(client_id, client_secret, account_type):
+
+    api = PyiCloudService(client_id, client_secret)
 
     if api.requires_2sa:
-        connect()
+        connect(api)
 
-    apple_events = api.calendar.events(range['from'],range['to'])
+    apple_data = {'calendar': None, 'task': None}
 
-    new_events = []
+    if account_type == const.CONST_CALENDAR:
+        apple_data['calendar'] = get_calendar_data(api)
 
-    for event in apple_events:
+    elif account_type == const.CONST_TASK:
+        apple_data['task'] = get_reminders_data(api)
 
-        start_data = event['startDate'][1:6]
-        start      = datetime.datetime(start_data[0],start_data[1],start_data[2],start_data[3],start_data[4],0)
-        end_data   = event['endDate'][1:6]
-        end        = datetime.datetime(end_data[0],end_data[1],end_data[2],end_data[3],end_data[4],0)
+    else:
+        apple_data['calendar'] = get_calendar_data(api)
+        apple_data['task'] = get_reminders_data(api)
 
-        new_events.append(Event (title          = event['title'],
-                                 start_datetime = start,
-                                 end_datetime   = end,
-                                 guid           = event['guid'],
-                                 provider       = CONST_APPLE,
-                                 user_id        = user.id))
-    
-    return sorted(new_events, key=lambda event: event.start_datetime)
+    return apple_data

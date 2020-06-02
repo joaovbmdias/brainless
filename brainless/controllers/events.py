@@ -17,7 +17,7 @@ def create(user_id, account_id, calendar_id, event):
     :param event: event to create in events structure
     :return: 201 on success, 409 on event already exists
     """    
-
+    
     schema = EventSchema()
     new_event = schema.load(event)
 
@@ -38,7 +38,12 @@ def read(user_id, account_id, calendar_id, event_id):
     :param event_id: event_id passed-in URL
     :return: 200 on success, 404 on event already exists
     """
-    event = Event(event_id=event_id)
+    event = Event(id=event_id,
+                  name = None,
+                  start_datetime = None,
+                  end_datetime = None,
+                  guid = None,
+                  calendar_id = None)
 
     read_event = event.read()
 
@@ -65,9 +70,9 @@ def search(user_id, account_id, calendar_id):
         abort(404, f'No events found')
 
     schema = EventSchema(many=True)
-    events = schema.dump(existing_events)
+    events_serialized = schema.dump(existing_events)
 
-    return events, 200
+    return events_serialized, 200
 
 def update(user_id, account_id, calendar_id, event_id, event):
     """
@@ -104,7 +109,12 @@ def delete(user_id, account_id, calendar_id, event_id):
     :return: 200 on success, 404 on event not found
     """
 
-    event_to_delete = Event(event_id=event_id)
+    event_to_delete = Event(id=event_id,
+                            name = None,
+                            start_datetime = None,
+                            end_datetime = None,
+                            guid = None,
+                            calendar_id = None)
 
     if event_to_delete.delete() is not None:
         abort(404, f'Event {event_id} not found')
