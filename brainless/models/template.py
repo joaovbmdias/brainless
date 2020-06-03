@@ -37,8 +37,12 @@ class Template():
         Core Update
         """
 
-        if self.exists():
+        existing = self.exists()
+
+        if existing.id is not None:
             # Update the template in the database
+            #self.id = existing.id
+
             db.session.merge(self)
             db.session.commit()
 
@@ -61,3 +65,13 @@ class Template():
             return None
         else:
             return self
+
+    def synchronize(self):
+        """
+        Core Synchronize
+        """
+
+        if self.id is None:
+            self.create()
+        else:
+            self.update()

@@ -12,11 +12,10 @@ from daemons.sync import sync_accounts
 @app.route('/')
 
 def brainless():
-    time.sleep(5)
     print('BBRRRAAAIIIINNNNSSSS')
 
 # background workder daemons
-sync_daemon = continuous_threading.PeriodicThread(10.0,target=sync_accounts)
+sync_daemon = continuous_threading.PeriodicThread(10,target=sync_accounts)
 brainless_daemon = continuous_threading.PausableThread(target=brainless)
 
 def startup():
@@ -40,10 +39,7 @@ def home():
 if __name__ == '__main__':
     startup()
     
-    #sync_daemon.start()
+    sync_daemon.start()
     #brainless_daemon.start()
 
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
-    sync_daemon.stop()
-    brainless_daemon.stop()
+    #app.run(host='0.0.0.0', port=5000, debug=True)

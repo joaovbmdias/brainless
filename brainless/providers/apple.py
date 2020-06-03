@@ -16,12 +16,12 @@ def get_calendar_data(api):
         end_data   = event['endDate'][1:6]
 
         calendar_guid  = event['pGuid']
-        title          = event['title']
+        name           = event['title']
         start_datetime = datetime.datetime(start_data[0],start_data[1],start_data[2],start_data[3],start_data[4],0)
         end_datetime   = datetime.datetime(end_data[0],end_data[1],end_data[2],end_data[3],end_data[4],0)
         guid           = event['guid']
 
-        event_data = {"title": title, "start_datetime": start_datetime, "end_datetime": end_datetime, "guid": guid}
+        event_data = {"name": name, "start_datetime": start_datetime, "end_datetime": end_datetime, "guid": guid}
         calendar_data.setdefault(calendar_guid, []).append(event_data)
     
     return calendar_data

@@ -7,7 +7,7 @@ from sqlalchemy import or_, and_
 from models.calendar import Calendar
 from models.project import Project
 from models.template import Template
-import providers.apple as apple
+import providers.provider as provider
 
 class Account(db.Model, Template):
     """ Account class """
@@ -27,12 +27,10 @@ class Account(db.Model, Template):
     __created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     __edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    calendars = db.relationship('Calendar', backref='account', lazy=True)
-    projects = db.relationship('Project', backref='account', lazy=True)
+    calendars = db.relationship('Calendar', backref='account', lazy=True, cascade="save-update, merge, delete")
+    projects = db.relationship('Project', backref='account', lazy=True, cascade="save-update, merge, delete")
 
     def __init__(self, name, provider, user_id, client_id, client_secret, id=None, account_type=const.CONST_CALENDAR, authentication_type=const.CONST_OAUTH, sync_frequency=5):
-        self.__created_timestamp = datetime.utcnow()
-        self.__edited_timestamp = datetime.utcnow()
         self.id = id
         self.name = name
         self.account_type = account_type
@@ -58,29 +56,35 @@ class Account(db.Model, Template):
 
     def synchronize(self):
 
-        account_data = {}
-
-        if self.provider == const.CONST_APPLE:
-            account_data = apple.get_data(self.client_id, self.client_secret, self.account_type)
-
-        elif self.provider == const.CONST_GOOGLE:
-            print('GOOGLE')
-        
-        elif self.provider == const.CONST_DOIST:
-            print('DOIST')
+        account_data = provider.get_data(self.provider, self.client_id, self.client_secret, self.account_type)
+        print(account_data)
 
         calendar_data = account_data['calendar']
         task_data = account_data['task']
 
-        for cal, events in calendar_data.items():
-            
-            calendar = Calendar(calendar_id=None,
-                                name = None,
-                                guid = cal,
-                                account_id = self.id,
-                                brain_enabled = None)
+        synced_calendars = []
 
+        for cal, events in calendar_data.items():
+
+            local = Calendar(id=None,
+                             name = None,
+                             guid = cal,
+                             account_id = self.id,
+                             brain_enabled = None)
+
+            calendar = local.read()
+
+            if calendar is None:
+                calendar = local    
+            
             calendar.synchronize(events)
+
+            synced_calendars.append(calendar.id)
+
+        not_synced = Calendar.query.filter(~Calendar.id.in_(synced_calendars)).all()
+
+        for cal in not_synced:
+            cal.synchronize(None)
 
 
 class AccountSchema(SQLAlchemyAutoSchema):

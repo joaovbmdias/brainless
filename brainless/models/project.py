@@ -22,7 +22,7 @@ class Project(db.Model, Template):
     __created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     __edited_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    tasks = db.relationship('Task', backref='project', lazy=True)
+    tasks = db.relationship('Task', backref='project', lazy=True, cascade="save-update, merge, delete")
 
     def __init__(self, name, guid, account_id, brain_enabled='Y', id=None):
         self.name = name
