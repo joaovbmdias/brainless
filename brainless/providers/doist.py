@@ -1,25 +1,53 @@
-# import requests
+import uuid
+import requests
+import json
+import datetime
+import constants as const
 
-# from oauthlib.oauth2 import BackendApplicationClient
-# from requests_oauthlib import OAuth2Session
-# from requests.auth import HTTPBasicAuth
+def get_projects(api_token):
+    data = []
 
-# def connect():
-#     client_id = input('Input client id: ')#          fd6fdae4018a4d2cbf42333a53216bcc
-#     client_secret = input('Input client secret: ')#      054bdbffdf784ac48a1981a743ba663b
+    projects = requests.get("https://api.todoist.com/rest/v1/projects", headers={"Authorization": "Bearer %s" % api_token}).json()
 
-#     auth = HTTPBasicAuth(client_id, client_secret)
-#     client = BackendApplicationClient(client_id=client_id)
-#     oauth = OAuth2Session(client=client)
-#     token = oauth.fetch_token(token_url='https://todoist.com/oauth/authorize', auth=auth)
+    for pr in projects:
+        data.append({'name': pr['name'], 'guid': pr['id'], 'tasks': []})
 
-#     #secret_string = "we4otry2v389wncoh4vomieiothc"
-#     #result = requests.get("https://todoist.com/oauth/authorize?client_id=fd6fdae4018a4d2cbf42333a53216bcc&scope=data:read_write:delete&state={}".format(secret_string))
-#     print(token)
+    return data
 
-# def get_tasks():
-#     result = requests.get("https://api.todoist.com/rest/v1/projects", headers={"Authorization": "Bearer %s" % "0b752352ce6ab62348195a8efc218130bbc5da8d"}).json()
-#     print(result)
+def get_tasks(api_token, projects):
 
-# if __name__ == "__main__":
-#     connect()
+    for pr in projects:
+        tasks = requests.get("https://api.todoist.com/rest/v1/tasks", params={"project_id": pr['guid']}, headers={"Authorization": "Bearer %s" % api_token}).json()
+
+        for ts in tasks:
+            try:
+                due = ts.pop('due',None)
+                due_datetime = None
+                if due is not None:
+                    due = due.pop('datetime',due.pop('date',None))
+                    due_datetime = datetime.datetime.strptime(due, '%Y-%m-%d %H:%M:%S.%f')
+            except:
+                pass
+
+            task = {'name': ts['content'], 'guid': ts['id'], 'priority': ts['priority'], 'labels': ts['label_ids'], 'due_datetime': due_datetime}
+
+            pr['tasks'].append(task)
+
+    return projects
+
+def schedule_task(api_token):
+    requests.post( "https://api.todoist.com/rest/v1/tasks/1234", data=json.dumps({"content": "Movies to watch"}),headers={"Content-Type": "application/json", "X-Request-Id": str(uuid.uuid4()), "Authorization": "Bearer %s" % api_token})
+
+def get_labels(api_token):
+    requests.get("https://api.todoist.com/rest/v1/labels", headers={"Authorization": "Bearer %s" % api_token}).json()
+
+def get_data(api_token):
+    doist_data = {const.CALENDAR: None, const.TASK: None, const.LABEL: None}
+
+    projects = get_projects(api_token)
+
+    tasks = get_tasks(api_token, projects)
+
+    doist_data[const.TASK] = tasks
+
+    return doist_data

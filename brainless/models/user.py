@@ -1,6 +1,5 @@
 """
 User module containing the user class and related user methods
-TODO: conditional rule for account.client_secret, mandatory only if necessary (OAuth2)
 """
 
 from datetime import datetime

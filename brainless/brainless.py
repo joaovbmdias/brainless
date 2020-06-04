@@ -18,13 +18,16 @@ def brainless():
 sync_daemon = continuous_threading.PeriodicThread(10,target=sync_accounts)
 brainless_daemon = continuous_threading.PausableThread(target=brainless)
 
-def startup():
+#@app.before_first_request
+def _run_on_start():
     """
     Responsible for all needed operations
-    before starting the full applications
+    before starting the full application
     """
     db.metadata.create_all(db.engine)
-    db.engine.connect().execute('PRAGMA foreign_keys=ON')
+    
+    sync_daemon.start()
+    #brainless_daemon.start()
 
 
 def home():
@@ -37,9 +40,6 @@ def home():
 
 # If we're running in stand alone mode, run the application
 if __name__ == '__main__':
-    startup()
-    
-    sync_daemon.start()
-    #brainless_daemon.start()
+    _run_on_start()
 
-    #app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)

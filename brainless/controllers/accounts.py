@@ -45,6 +45,9 @@ def read(user_id, account_id):
                       user_id=None,
                       client_id=None,
                       client_secret=None,
+                      username=None,
+                      password=None,
+                      api_token=None,
                       sync_frequency=None)
 
     read_account = account.read()
@@ -113,6 +116,9 @@ def delete(user_id, account_id):
                                 user_id=None,
                                 client_id=None,
                                 client_secret=None,
+                                username=None,
+                                password=None,
+                                api_token=None,
                                 sync_frequency=None)
 
     if account_to_delete.delete() is not None:

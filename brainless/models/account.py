@@ -1,36 +1,39 @@
-from datetime import datetime
+from datetime               import datetime, timedelta
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from configuration import db
-import constants as const
-from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import or_, and_
-from models.calendar import Calendar
-from models.project import Project
-from models.template import Template
-import providers.provider as provider
+from configuration          import db
+from sqlalchemy.orm.exc     import NoResultFound
+from sqlalchemy             import or_, and_
+from models.calendar        import Calendar
+from models.project         import Project
+from models.template        import Template
+import constants            as const
+import providers.provider   as provider
 
 class Account(db.Model, Template):
     """ Account class """
     __tablename__ = 'account'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), unique=True, nullable=False)
-    account_type = db.Column(db.String(32), nullable=False, default=const.CONST_CALENDAR)
-    authentication_type = db.Column(db.String(32), nullable=False, default=const.CONST_OAUTH)
-    provider = db.Column(db.String(32), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    client_id = db.Column(db.String(32), nullable=False)
-    client_secret = db.Column(db.String(32), nullable=True)
-    sync_frequency = db.Column(db.Integer, nullable=False, default=5)
-    last_sync = db.Column(db.DateTime, nullable=True, default=None)
-    next_sync = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    __created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    __edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    id                  = db.Column(db.Integer,    primary_key=True)
+    name                = db.Column(db.String(32), unique=True,             nullable=False)
+    account_type        = db.Column(db.String(32), nullable=False,          default=const.CALENDAR)
+    authentication_type = db.Column(db.String(32), nullable=False)
+    provider            = db.Column(db.String(32), nullable=False)
+    username            = db.Column(db.String(32), nullable=True)
+    password            = db.Column(db.String(32), nullable=True)
+    client_id           = db.Column(db.String(32), nullable=True)
+    client_secret       = db.Column(db.String(32), nullable=True)
+    api_token           = db.Column(db.String(50), nullable=True)
+    sync_frequency      = db.Column(db.Integer,    nullable=False,          default=1)
+    last_sync           = db.Column(db.DateTime,   nullable=True,           default=None)
+    next_sync           = db.Column(db.DateTime,   nullable=False,          default=datetime.utcnow)
+    __created_timestamp = db.Column(db.DateTime,   default=datetime.utcnow)
+    __edited_timestamp  = db.Column(db.DateTime,   default=datetime.utcnow,  onupdate=datetime.utcnow)
+    user_id             = db.Column(db.Integer,    db.ForeignKey('user.id'), nullable=False)
 
     calendars = db.relationship('Calendar', backref='account', lazy=True, cascade="save-update, merge, delete")
     projects = db.relationship('Project', backref='account', lazy=True, cascade="save-update, merge, delete")
 
-    def __init__(self, name, provider, user_id, client_id, client_secret, id=None, account_type=const.CONST_CALENDAR, authentication_type=const.CONST_OAUTH, sync_frequency=5):
+    def __init__(self, name, provider, user_id, client_id, client_secret, authentication_type, username, password, api_token, id=None, account_type=const.CALENDAR, sync_frequency=5):
         self.id = id
         self.name = name
         self.account_type = account_type
@@ -39,6 +42,9 @@ class Account(db.Model, Template):
         self.user_id = user_id
         self.client_id = client_id
         self.client_secret = client_secret
+        self.username = username
+        self.password = password
+        self.api_token = api_token
         self.sync_frequency = sync_frequency
         self.last_sync = datetime.utcnow()
         self.next_sync = datetime.utcnow()
@@ -56,35 +62,76 @@ class Account(db.Model, Template):
 
     def synchronize(self):
 
-        account_data = provider.get_data(self.provider, self.client_id, self.client_secret, self.account_type)
-        print(account_data)
+        authentication_data = {'provider': self.provider,
+                               'username': self.username,
+                               'password': self.password,
+                               'client_id': self.client_id,
+                               'client_secret': self.client_secret,
+                               'api_token': self.api_token,
+                               'account_type': self.account_type}
 
-        calendar_data = account_data['calendar']
-        task_data = account_data['task']
+        account_data = provider.get_data(authentication_data)
 
-        synced_calendars = []
+        if self.account_type in [const.CALENDAR, const.ALL_DATA]:
 
-        for cal, events in calendar_data.items():
+            calendar_data = account_data[const.CALENDAR]
+            synced_calendars = []
 
-            local = Calendar(id=None,
-                             name = None,
-                             guid = cal,
-                             account_id = self.id,
-                             brain_enabled = None)
+            for cal in calendar_data:
 
-            calendar = local.read()
+                local = Calendar(id=None,
+                                 name = cal['name'],
+                                 guid = cal['guid'],
+                                 account_id = self.id,
+                                 brain_enabled = 'Y')
 
-            if calendar is None:
-                calendar = local    
-            
-            calendar.synchronize(events)
+                calendar = local.read()
 
-            synced_calendars.append(calendar.id)
+                if calendar is None:
+                    calendar = local
+                else:
+                    calendar.name = ''
+                
+                calendar.synchronize(cal['events'])
 
-        not_synced = Calendar.query.filter(~Calendar.id.in_(synced_calendars)).all()
+                synced_calendars.append(calendar.id)
 
-        for cal in not_synced:
-            cal.synchronize(None)
+            not_synced = Calendar.query.filter(~Calendar.id.in_(synced_calendars)).all()
+
+            for cal in not_synced:
+                cal.synchronize(None)
+
+        if self.account_type in [const.TASK, const.ALL_DATA]:
+
+            task_data = account_data[const.TASK]
+            synced_projects = []
+
+            for pr in task_data:
+                local = Project(id = None,
+                                name = pr['name'],
+                                guid = pr['guid'],
+                                account_id = self.id,
+                                brain_enabled = 'Y')
+                            
+                project = local.read()
+
+                if project is None:
+                    project = local
+                else:
+                    project.name = pr['name']
+                
+                project.synchronize(pr['tasks'])
+
+                synced_projects.append(project.id)
+
+            not_synced = Project.query.filter(~Project.id.in_(synced_projects)).all()
+
+            for pr in not_synced:
+                pr.synchronize(None)
+        
+        self.last_sync = datetime.utcnow()
+        self.next_sync = datetime.utcnow() + timedelta(minutes=self.sync_frequency)
+        self.update()
 
 
 class AccountSchema(SQLAlchemyAutoSchema):

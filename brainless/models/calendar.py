@@ -16,7 +16,7 @@ class Calendar(db.Model, Template):
     brain_enabled       = db.Column(db.String(1),  nullable=False, default='Y')
     __created_timestamp = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow)
     __edited_timestamp  = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
-    account_id          = db.Column(db.Integer,    db.ForeignKey('account.id'), nullable=False)
+    account_id          = db.Column(db.Integer,    db.ForeignKey('account.id'),             nullable=False)
 
     events = db.relationship('Event', backref='calendar', lazy=True, cascade="save-update, merge, delete")
 
@@ -38,7 +38,7 @@ class Calendar(db.Model, Template):
 
         return existing_calendar
 
-    def synchronize(self, event_data):
+    def synchronize(self, events):
 
         if self.id is None:
             self.create()
@@ -49,8 +49,8 @@ class Calendar(db.Model, Template):
 
             event_guids = ['#$%&/()']
 
-            if event_data is not None:
-                for ev in event_data:
+            if events is not None:
+                for ev in events:
                     local = Event(id = None,
                                   name           = ev['name'],
                                   guid           = ev['guid'],
@@ -68,7 +68,6 @@ class Calendar(db.Model, Template):
 
                     event_guids.append(ev['guid'])
 
-            #TODO: there MUST BE a better way to delete. bulk delete
             for ev in Event.query.filter(and_(Event.calendar_id == self.id, ~Event.guid.in_(event_guids))).all():
                 db.session.delete(ev)
 

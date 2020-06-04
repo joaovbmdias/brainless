@@ -20,14 +20,14 @@ class Task(db.Model, Template):
     """ Task class """
     __tablename__ = 'task'
 
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(32), nullable=False)
-    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
-    due_datetime = db.Column(db.DateTime, nullable=True)
-    priority = db.Column(db.Integer, nullable=True)
-    guid = db.Column(db.String(32), nullable=False)
-    __created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    __edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    id                  = db.Column(db.Integer,    primary_key=True)
+    name                = db.Column(db.String(32), nullable=False)
+    due_datetime        = db.Column(db.DateTime,   nullable=True)
+    priority            = db.Column(db.Integer,    nullable=True)
+    guid                = db.Column(db.String(32), nullable=False)
+    __created_timestamp = db.Column(db.DateTime,   default=datetime.utcnow)
+    __edited_timestamp  = db.Column(db.DateTime,   default=datetime.utcnow,     onupdate=datetime.utcnow)
+    project_id          = db.Column(db.Integer,    db.ForeignKey('project.id'), nullable=False)
 
     labels = db.relationship('Label', secondary=task_labels, backref='tasks')
 
@@ -42,16 +42,13 @@ class Task(db.Model, Template):
     def exists(self):
 
         try:
-            existing_task = Task.query.filter(or_(Task.id == self.id, 
-                                                  and_(Task.guid == self.guid, 
+            existing_task = Task.query.filter(or_(Task.id         == self.id, 
+                                                  and_(Task.guid  == self.guid, 
                                                   Task.project_id == self.project_id))).one()   
         except NoResultFound:
             return None
 
         return existing_task
-
-    def synchronize(self):
-        print('hello')
 
 class TaskSchema(SQLAlchemyAutoSchema):
     """ TaskSchema class """

@@ -76,15 +76,3 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 yarl==1.4.2
 zipp==3.1.0
-
-
-pyicloud
-sqlalchemy
-connexion
-Flask-SQLAlchemy
-flask-marshmallow
-marshmallow-sqlalchemy
-marshmallow
-connexion[swagger-ui]
-#python-crontab
-continuous_threading
