@@ -15,8 +15,8 @@ class Project(db.Model, Template):
     __tablename__ = 'project'
 
     id                  = db.Column(db.Integer,    primary_key=True)
-    name                = db.Column(db.String(32), nullable=False)
-    guid                = db.Column(db.String(32), nullable=False)
+    name                = db.Column(db.String(50), nullable=False)
+    guid                = db.Column(db.String(50), nullable=False)
     brain_enabled       = db.Column(db.String(1),  nullable=False, default='Y')
     __created_timestamp = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow)
     __edited_timestamp  = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -49,9 +49,9 @@ class Project(db.Model, Template):
         else:
             self.update()
 
-        if self.brain_enabled:
+        task_guids = ['#$%&/()']
 
-            task_guids = ['#$%&/()']
+        if self.brain_enabled:
 
             if tasks is not None:
                 for ta in tasks:
@@ -72,8 +72,8 @@ class Project(db.Model, Template):
 
                     task_guids.append(ta['guid'])
 
-            for ta in Task.query.filter(and_(Task.project_id == self.id, ~Task.guid.in_(task_guids))).all():
-                db.session.delete(ta)
+        for ta in Task.query.filter(and_(Task.project_id == self.id, ~Task.guid.in_(task_guids))).all():
+            db.session.delete(ta)
 
 class ProjectSchema(SQLAlchemyAutoSchema):
     """ ProjectSchema class """

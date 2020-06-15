@@ -11,8 +11,8 @@ class Calendar(db.Model, Template):
     __tablename__ = 'calendar'
 
     id                  = db.Column(db.Integer,    primary_key=True)
-    name                = db.Column(db.String(32), nullable=True)
-    guid                = db.Column(db.String(32), nullable=False)
+    name                = db.Column(db.String(50), nullable=True)
+    guid                = db.Column(db.String(50), nullable=False)
     brain_enabled       = db.Column(db.String(1),  nullable=False, default='Y')
     __created_timestamp = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow)
     __edited_timestamp  = db.Column(db.DateTime,   nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -44,10 +44,11 @@ class Calendar(db.Model, Template):
             self.create()
         else:
             self.update()
+        
+        event_guids = ['#$%&/()']
 
         if self.brain_enabled:
 
-            event_guids = ['#$%&/()']
 
             if events is not None:
                 for ev in events:
@@ -68,8 +69,8 @@ class Calendar(db.Model, Template):
 
                     event_guids.append(ev['guid'])
 
-            for ev in Event.query.filter(and_(Event.calendar_id == self.id, ~Event.guid.in_(event_guids))).all():
-                db.session.delete(ev)
+        for ev in Event.query.filter(and_(Event.calendar_id == self.id, ~Event.guid.in_(event_guids))).all():
+            db.session.delete(ev)
 
 class CalendarSchema(SQLAlchemyAutoSchema):
     """ CalendarSchema class """

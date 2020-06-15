@@ -15,7 +15,7 @@ class Label(db.Model, Template):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32), nullable=False)
-    guid = db.Column(db.String(32), nullable=False)
+    guid = db.Column(db.String(50), nullable=False)
     account_id = db.Column(db.Integer, nullable=False)
     brain_enabled = db.Column(db.String(1), nullable=False, default='Y')
     __created_timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)

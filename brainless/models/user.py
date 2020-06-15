@@ -15,10 +15,10 @@ class User(db.Model, Template):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(32), nullable=False, unique=True)
-    password = db.Column(db.String(32), nullable=False)
-    first_name = db.Column(db.String(32), nullable=True)
-    last_name = db.Column(db.String(32), nullable=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(64), nullable=False)
+    first_name = db.Column(db.String(20), nullable=True)
+    last_name = db.Column(db.String(20), nullable=True)
     __created_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     __edited_timestamp = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     

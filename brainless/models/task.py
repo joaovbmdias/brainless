@@ -21,10 +21,10 @@ class Task(db.Model, Template):
     __tablename__ = 'task'
 
     id                  = db.Column(db.Integer,    primary_key=True)
-    name                = db.Column(db.String(32), nullable=False)
+    name                = db.Column(db.String(120), nullable=False)
     due_datetime        = db.Column(db.DateTime,   nullable=True)
     priority            = db.Column(db.Integer,    nullable=True)
-    guid                = db.Column(db.String(32), nullable=False)
+    guid                = db.Column(db.String(50), nullable=False)
     __created_timestamp = db.Column(db.DateTime,   default=datetime.utcnow)
     __edited_timestamp  = db.Column(db.DateTime,   default=datetime.utcnow,     onupdate=datetime.utcnow)
     project_id          = db.Column(db.Integer,    db.ForeignKey('project.id'), nullable=False)
