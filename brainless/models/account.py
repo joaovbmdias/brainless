@@ -5,6 +5,7 @@ from sqlalchemy.orm.exc     import NoResultFound
 from sqlalchemy             import or_, and_
 from models.calendar        import Calendar
 from models.project         import Project
+from models.label           import Label
 from models.template        import Template
 import constants            as const
 import providers.provider   as provider
@@ -32,6 +33,7 @@ class Account(db.Model, Template):
 
     calendars = db.relationship('Calendar', backref='account', lazy=True, cascade="save-update, merge, delete")
     projects = db.relationship('Project', backref='account', lazy=True, cascade="save-update, merge, delete")
+    labels = db.relationship('Label', backref='account', lazy=True, cascade="save-update, merge, delete")
 
     def __init__(self, name, provider, user_id, client_id, client_secret, authentication_type, username, password, api_token, id=None, account_type=const.CALENDAR, sync_frequency=5):
         self.id = id
@@ -62,13 +64,13 @@ class Account(db.Model, Template):
 
     def synchronize(self):
 
-        authentication_data = {'provider': self.provider,
-                               'username': self.username,
-                               'password': self.password,
-                               'client_id': self.client_id,
+        authentication_data = {'provider':      self.provider,
+                               'username':      self.username,
+                               'password':      self.password,
+                               'client_id':     self.client_id,
                                'client_secret': self.client_secret,
-                               'api_token': self.api_token,
-                               'account_type': self.account_type}
+                               'api_token':     self.api_token,
+                               'account_type':  self.account_type}
 
         account_data = provider.get_data(authentication_data)
 
@@ -79,10 +81,10 @@ class Account(db.Model, Template):
 
             for cal in calendar_data:
 
-                local = Calendar(id=None,
-                                 name = cal['name'],
-                                 guid = cal['guid'],
-                                 account_id = self.id,
+                local = Calendar(id            = None,
+                                 name          = cal['name'],
+                                 guid          = cal['guid'],
+                                 account_id    = self.id,
                                  brain_enabled = 'Y')
 
                 calendar = local.read()
@@ -128,6 +130,30 @@ class Account(db.Model, Template):
 
             for pr in not_synced:
                 pr.synchronize(None)
+
+            label_data = account_data[const.LABEL]
+            label_guids = []
+
+            for lb in label_data:
+                local = Label(id            = None,
+                              name          = lb['name'],
+                              order         = lb['order'],
+                              guid          = lb['guid'],
+                              account_id    = self.id,
+                              brain_enabled = 'Y')
+
+                label = local.read()
+
+                if label is not None:
+                    local.id = label.id
+                
+                label = local
+                label.synchronize()
+
+                label_guids.append(lb['guid'])
+
+                for lb in Label.query.filter(and_(Label.account_id == self.id, ~Label.guid.in_(label_guids))).all():
+                    db.session.delete(lb)
         
         self.last_sync = datetime.utcnow()
         self.next_sync = datetime.utcnow() + timedelta(minutes=self.sync_frequency)

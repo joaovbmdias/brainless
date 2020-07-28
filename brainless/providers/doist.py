@@ -39,7 +39,15 @@ def schedule_task(api_token):
     requests.post( "https://api.todoist.com/rest/v1/tasks/1234", data=json.dumps({"content": "Movies to watch"}),headers={"Content-Type": "application/json", "X-Request-Id": str(uuid.uuid4()), "Authorization": "Bearer %s" % api_token})
 
 def get_labels(api_token):
-    requests.get("https://api.todoist.com/rest/v1/labels", headers={"Authorization": "Bearer %s" % api_token}).json()
+    data = []
+
+    labels = requests.get("https://api.todoist.com/rest/v1/labels", headers={"Authorization": "Bearer %s" % api_token}).json()
+
+    for lb in  labels:
+        data.append({'name': lb['name'], 'guid': lb['id'], 'order': lb['order']})
+    
+    return data
+
 
 def get_data(api_token):
     doist_data = {const.CALENDAR: None, const.TASK: None, const.LABEL: None}
@@ -48,6 +56,9 @@ def get_data(api_token):
 
     tasks = get_tasks(api_token, projects)
 
+    labels = get_labels(api_token)
+
     doist_data[const.TASK] = tasks
+    doist_data[const.LABEL] = labels
 
     return doist_data

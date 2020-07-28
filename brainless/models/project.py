@@ -49,7 +49,7 @@ class Project(db.Model, Template):
         else:
             self.update()
 
-        task_guids = ['#$%&/()']
+        task_guids = []
 
         if self.brain_enabled:
 

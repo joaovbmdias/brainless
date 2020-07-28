@@ -39,6 +39,7 @@ def read(user_id, account_id, label_id):
 
     label = Label(id=label_id,
                   name=None,
+                  order=None,
                   guid=None,
                   account_id=None,
                   brain_enabled='Y')
@@ -106,6 +107,7 @@ def delete(user_id, account_id, label_id):
 
     label_to_delete = Label(id=label_id,
                             name=None,
+                            order=None,
                             guid=None,
                             account_id=None,
                             brain_enabled='Y')
