@@ -8,7 +8,7 @@ from configuration          import db
 from models.task            import Task
 from models.template        import Template
 from sqlalchemy.orm.exc     import NoResultFound
-from sqlalchemy             import or_, and_
+from sqlalchemy             import or_, and_, CheckConstraint, UniqueConstraint
 
 class Project(db.Model, Template):
     """ Project class """
@@ -23,6 +23,10 @@ class Project(db.Model, Template):
     account_id          = db.Column(db.Integer,    db.ForeignKey('account.id'),             nullable=False)
 
     tasks = db.relationship('Task', backref='project', lazy=True, cascade="save-update, merge, delete")
+
+    __table_args__ = (
+        CheckConstraint('brain_enabled IN (\'Y\', \'N\')', name='brain_enabled_val'),
+        UniqueConstraint('guid', 'account_id', name='unique_guid'))
 
     def __init__(self, name, guid, account_id, brain_enabled='Y', id=None):
         self.name          = name
@@ -79,8 +83,8 @@ class ProjectSchema(SQLAlchemyAutoSchema):
     """ ProjectSchema class """
     class Meta:
         """ Meta class classification """
-        model = Project
-        sqla_session = db.session
-        include_fk = True
+        model                 = Project
+        sqla_session          = db.session
+        include_fk            = True
         include_relationships = True
-        load_instance = True
+        load_instance         = True

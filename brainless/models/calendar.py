@@ -4,7 +4,7 @@ from configuration          import db
 from models.event           import Event
 from models.template        import Template
 from sqlalchemy.orm.exc     import NoResultFound
-from sqlalchemy             import or_, and_
+from sqlalchemy             import or_, and_, CheckConstraint, UniqueConstraint
 
 class Calendar(db.Model, Template):
     """ Calendar class """
@@ -20,6 +20,10 @@ class Calendar(db.Model, Template):
 
     events = db.relationship('Event', backref='calendar', lazy=True, cascade="save-update, merge, delete")
 
+    __table_args__ = (
+        CheckConstraint('brain_enabled IN (\'Y\', \'N\')', name='brain_enabled_val'),
+        UniqueConstraint('guid', 'account_id', name='unique_guid'))
+
     def __init__(self, name, guid, account_id, id=None, brain_enabled='Y'):
         self.name          = name
         self.guid          = guid
@@ -30,8 +34,8 @@ class Calendar(db.Model, Template):
     def exists(self):
 
         try:
-            existing_calendar = Calendar.query.filter(or_(Calendar.id == self.id, 
-                                                        and_(Calendar.guid == self.guid, 
+            existing_calendar = Calendar.query.filter(or_(Calendar.id            == self.id, 
+                                                        and_(Calendar.guid       == self.guid, 
                                                              Calendar.account_id == self.account_id))).one()
         except NoResultFound:
             return None
@@ -76,8 +80,8 @@ class CalendarSchema(SQLAlchemyAutoSchema):
     """ CalendarSchema class """
     class Meta:
         """ Meta class classification """
-        model = Calendar
-        sqla_session = db.session
-        include_fk = True
+        model                 = Calendar
+        sqla_session          = db.session
+        include_fk            = True
         include_relationships = True
-        load_instance = True
+        load_instance         = True

@@ -7,7 +7,7 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from configuration import db
 from models.template import Template
 from sqlalchemy.orm.exc import NoResultFound
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, CheckConstraint, UniqueConstraint
 
 class Label(db.Model, Template):
     """ Label class """
@@ -21,33 +21,36 @@ class Label(db.Model, Template):
     __created_timestamp = db.Column(db.DateTime,   nullable=False,              default=datetime.utcnow)
     __edited_timestamp  = db.Column(db.DateTime,   nullable=False,              default=datetime.utcnow, onupdate=datetime.utcnow)
     account_id          = db.Column(db.Integer,    db.ForeignKey('account.id'), nullable=False)
+
+    __table_args__ = (
+        CheckConstraint('brain_enabled IN (\'Y\', \'N\')', name='brain_enabled_val'),
+        UniqueConstraint('guid', 'account_id', name='unique_guid'))
     
     def __init__(self, name, order, guid, account_id, brain_enabled='Y', id=None):
-        self.name = name
-        self.order = order
-        self.guid = guid
-        self.account_id = account_id
+        self.name          = name
+        self.order         = order
+        self.guid          = guid
+        self.account_id    = account_id
         self.brain_enabled = brain_enabled
-        self.id = id
+        self.id            = id
 
     def exists(self):
 
         try:
-            existing_label = Label.query.filter(or_(Label.id == self.id, 
-                                                    and_(Label.guid == self.guid, 
+            existing_label = Label.query.filter(or_(Label.id              == self.id, 
+                                                    and_(Label.guid       == self.guid, 
                                                          Label.account_id == self.account_id))).one()   
         except NoResultFound:
             return None
 
         return existing_label
 
-
 class LabelSchema(SQLAlchemyAutoSchema):
     """ LabelSchema class """
     class Meta:
         """ Meta class classification """
-        model = Label
-        sqla_session = db.session
-        include_fk = True
+        model                 = Label
+        sqla_session          = db.session
+        include_fk            = True
         include_relationships = True
-        load_instance = True
+        load_instance         = True

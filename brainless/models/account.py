@@ -2,7 +2,7 @@ from datetime               import datetime, timedelta
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from configuration          import db
 from sqlalchemy.orm.exc     import NoResultFound
-from sqlalchemy             import or_, and_
+from sqlalchemy             import or_, and_, CheckConstraint
 from models.calendar        import Calendar
 from models.project         import Project
 from models.label           import Label
@@ -13,6 +13,10 @@ import providers.provider   as provider
 class Account(db.Model, Template):
     """ Account class """
     __tablename__ = 'account'
+    __table_args__ = (
+        CheckConstraint('(authentication_type = \'' + const.OAUTH +     '\' AND length(username)=0  AND length(password)=0 AND length(api_token)=0 AND length(client_id)>0 AND length(client_secret)>0) OR authentication_type != \'' + const.OAUTH     + '\'', name='auth_oauth'),
+        CheckConstraint('(authentication_type = \'' + const.USER_PASS + '\' AND length(username)>0  AND length(password)>0 AND length(api_token)=0 AND length(client_id)=0 AND length(client_secret)=0) OR authentication_type != \'' + const.USER_PASS + '\'', name='auth_user_pass'),
+        CheckConstraint('(authentication_type = \'' + const.API_TOKEN + '\' AND length(username)=0  AND length(password)=0 AND length(api_token)>0 AND length(client_id)=0 AND length(client_secret)=0) OR authentication_type != \'' + const.API_TOKEN + '\'', name='auth_api_token'))
 
     id                  = db.Column(db.Integer,    primary_key=True)
     name                = db.Column(db.String(50), unique=True,             nullable=False)
@@ -32,31 +36,31 @@ class Account(db.Model, Template):
     user_id             = db.Column(db.Integer,    db.ForeignKey('user.id'), nullable=False)
 
     calendars = db.relationship('Calendar', backref='account', lazy=True, cascade="save-update, merge, delete")
-    projects = db.relationship('Project', backref='account', lazy=True, cascade="save-update, merge, delete")
-    labels = db.relationship('Label', backref='account', lazy=True, cascade="save-update, merge, delete")
+    projects  = db.relationship('Project',  backref='account', lazy=True, cascade="save-update, merge, delete")
+    labels    = db.relationship('Label',    backref='account', lazy=True, cascade="save-update, merge, delete")
 
     def __init__(self, name, provider, user_id, client_id, client_secret, authentication_type, username, password, api_token, id=None, account_type=const.CALENDAR, sync_frequency=5):
-        self.id = id
-        self.name = name
-        self.account_type = account_type
+        self.id                  = id
+        self.name                = name
+        self.account_type        = account_type
         self.authentication_type = authentication_type
-        self.provider = provider
-        self.user_id = user_id
-        self.client_id = client_id
-        self.client_secret = client_secret
-        self.username = username
-        self.password = password
-        self.api_token = api_token
-        self.sync_frequency = sync_frequency
-        self.last_sync = datetime.utcnow()
-        self.next_sync = datetime.utcnow()
+        self.provider            = provider
+        self.user_id             = user_id
+        self.client_id           = client_id
+        self.client_secret       = client_secret
+        self.username            = username
+        self.password            = password
+        self.api_token           = api_token
+        self.sync_frequency      = sync_frequency
+        self.last_sync           = datetime.utcnow()
+        self.next_sync           = datetime.utcnow()
     
     def exists(self):
 
         try:
-            existing_account = (Account.query.filter(or_(and_(Account.name == self.name ,Account.user_id == self.user_id), 
+            existing_account = (Account.query.filter(or_(and_(Account.name     == self.name,     Account.user_id   == self.user_id), 
                                                          and_(Account.provider == self.provider, Account.client_id == self.client_id),
-                                                             (Account.id == self.id)))).one() 
+                                                             (Account.id       == self.id)))).one() 
         except NoResultFound:
             return None
 
@@ -159,13 +163,12 @@ class Account(db.Model, Template):
         self.next_sync = datetime.utcnow() + timedelta(minutes=self.sync_frequency)
         self.update()
 
-
 class AccountSchema(SQLAlchemyAutoSchema):
     """ AccountSchema class """
     class Meta:
         """ Meta class classification """
-        model = Account
-        sqla_session = db.session
-        include_fk = True
+        model                 = Account
+        sqla_session          = db.session
+        include_fk            = True
         include_relationships = True
-        load_instance = True
+        load_instance         = True
