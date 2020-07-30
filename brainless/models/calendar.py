@@ -45,7 +45,7 @@ class Calendar(db.Model, Template):
         else:
             self.update()
         
-        event_guids = ['#$%&/()']
+        event_guids = []
 
         if self.brain_enabled:
 

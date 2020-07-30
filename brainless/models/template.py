@@ -8,7 +8,7 @@ class Template():
 
         return self
 
-    def create(self):
+    def create(self, bypass_commit=False):
         """
         Core Create
         """
@@ -16,7 +16,8 @@ class Template():
         if self.exists() is None:
             # add the template to the database
             db.session.add(self)
-            db.session.commit()
+            if not bypass_commit:
+                db.session.commit()
 
             return self
 
@@ -32,7 +33,7 @@ class Template():
 
         return self
 
-    def update(self):
+    def update(self, bypass_commit=False):
         """
         Core Update
         """
@@ -44,14 +45,15 @@ class Template():
             #self.id = existing.id
 
             db.session.merge(self)
-            db.session.commit()
+            if not bypass_commit:
+                db.session.commit()
 
             return self
 
         else:
             return None
 
-    def delete(self):
+    def delete(self, bypass_commit=False):
         """
         Core Delete
         """        
@@ -60,7 +62,8 @@ class Template():
 
         if existing_template is not None:
             db.session.delete(existing_template)
-            db.session.commit()
+            if not bypass_commit:
+                db.session.commit()
 
             return None
         else:
@@ -72,6 +75,6 @@ class Template():
         """
 
         if self.id is None:
-            self.create()
+            self.create(bypass_commit=True)
         else:
-            self.update()
+            self.update(bypass_commit=True)
