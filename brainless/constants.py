@@ -11,7 +11,7 @@ LABEL = 'LABEL'
 
 # authentication types
 OAUTH='OAUTH2'
-USERPASS='USERPASS'
+USER_PASS='USERPASS'
 API_TOKEN='API_TOKEN'
 
 # configurations
