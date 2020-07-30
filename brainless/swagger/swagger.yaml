@@ -1236,6 +1236,8 @@ paths:
                   type: string
                 guid:
                   type: string
+                order:
+                  type: integer
       x-swagger-router-controller: "controllers"
     put:
       operationId: "labels.update"
@@ -1274,6 +1276,8 @@ paths:
                 type: string
               account_id:
                 type: integer
+              order:
+                type: integer
       responses:
         201:
           description: "Successfully updated the label"
@@ -1287,6 +1291,8 @@ paths:
               guid:
                 type: string
               account_id:
+                type: integer
+              order:
                 type: integer
       x-swagger-router-controller: "controllers"
     delete:
@@ -1346,6 +1352,8 @@ paths:
                   type: string
                 guid:
                   type: string
+                order:
+                  type: integer
       x-swagger-router-controller: "controllers"
     post:
       operationId: "labels.create"
@@ -1377,6 +1385,8 @@ paths:
                 type: string
               account_id:
                 type: integer
+              order:
+                type: integer
       responses:
         201:
           description: "Successfully created the label"
@@ -1390,5 +1400,7 @@ paths:
               guid:
                 type: string
               account_id:
+                type: integer
+              order:
                 type: integer
       x-swagger-router-controller: "controllers"
