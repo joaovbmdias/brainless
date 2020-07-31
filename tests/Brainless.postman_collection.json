@@ -1366,443 +1366,6 @@
 									"_postman_isSubFolder": true
 								},
 								{
-									"name": "Label",
-									"item": [
-										{
-											"name": "Create label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "3fbb3310-04ec-440a-bf7c-5b38531dee2c",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(201);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Create same label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "20a43d3d-bb12-45c3-b4ee-f47aafd6b7cf",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(409);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Create another label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "d984970f-32a0-490f-9bfe-8c9b52d0fb6e",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(201);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"name\": \"Better label\",\n    \"guid\": \"qgmkopdkmqwrqr3j3jiopjwe\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Create a third label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "2f6b5331-2c58-411a-9baf-70c8a5df3595",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(201);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"name\": \"Greater label\",\n    \"guid\": \"er3trtuiiuouyuk78i787\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\"\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Delete an existing label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "299fe2a8-bc1e-4ca3-8658-3f02b3b823c5",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/3",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels",
-														"3"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Delete an unexisting label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "14bf1bb7-9b71-4f97-8712-eccce02e32f1",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(404);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "DELETE",
-												"header": [],
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/300",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels",
-														"300"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Read one existing label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "f51c3aff-07ec-46bd-aa32-2e6e01d6b0d1",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels",
-														"1"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Read one unexisting label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "fdc3195c-4f75-41c7-a511-f35482cbb3bb",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(404);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/100",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels",
-														"100"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Read all user labels",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "cd77fae4-4ca7-46b9-9446-d71b4dbb1ac4",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [],
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels"
-													]
-												}
-											},
-											"response": []
-										},
-										{
-											"name": "Update an existing label",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "76ddf980-a0a9-43ee-9297-20a3408223cb",
-														"exec": [
-															"pm.test(\"Status test\", function () {",
-															"    pm.response.to.have.status(200);",
-															"});"
-														],
-														"type": "text/javascript"
-													}
-												}
-											],
-											"request": {
-												"method": "PUT",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\n    \"name\": \"Amazing label updated\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"id\": 1\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
-													"protocol": "http",
-													"host": [
-														"localhost"
-													],
-													"port": "5000",
-													"path": [
-														"api",
-														"users",
-														"1",
-														"accounts",
-														"1",
-														"labels",
-														"1"
-													]
-												}
-											},
-											"response": []
-										}
-									],
-									"protocolProfileBehavior": {},
-									"_postman_isSubFolder": true
-								},
-								{
 									"name": "Create project",
 									"event": [
 										{
@@ -2237,6 +1800,443 @@
 							"_postman_isSubFolder": true
 						},
 						{
+							"name": "Label",
+							"item": [
+								{
+									"name": "Create label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "3fbb3310-04ec-440a-bf7c-5b38531dee2c",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"order\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create same label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "20a43d3d-bb12-45c3-b4ee-f47aafd6b7cf",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(409);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Amazing label\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"order\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create another label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d984970f-32a0-490f-9bfe-8c9b52d0fb6e",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Better label\",\n    \"guid\": \"qgmkopdkmqwrqr3j3jiopjwe\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"order\": 2\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a third label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "2f6b5331-2c58-411a-9baf-70c8a5df3595",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(201);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Greater label\",\n    \"guid\": \"er3trtuiiuouyuk78i787\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"order\": 3\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an existing label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "299fe2a8-bc1e-4ca3-8658-3f02b3b823c5",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels/3",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels",
+												"3"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete an unexisting label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "14bf1bb7-9b71-4f97-8712-eccce02e32f1",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels/300",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels",
+												"300"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one existing label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "f51c3aff-07ec-46bd-aa32-2e6e01d6b0d1",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read one unexisting label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "fdc3195c-4f75-41c7-a511-f35482cbb3bb",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(404);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels/100",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels",
+												"100"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Read all user labels",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "cd77fae4-4ca7-46b9-9446-d71b4dbb1ac4",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update an existing label",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "76ddf980-a0a9-43ee-9297-20a3408223cb",
+												"exec": [
+													"pm.test(\"Status test\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"Amazing label updated\",\n    \"guid\": \"we4987twt98c4978qtc93y\",\n    \"account_id\": 1,\n    \"brain_enabled\": \"Y\",\n    \"id\": 1,\n    \"order\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:5000/api/users/1/accounts/1/labels/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "5000",
+											"path": [
+												"api",
+												"users",
+												"1",
+												"accounts",
+												"1",
+												"labels",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
 							"name": "Create account",
 							"event": [
 								{
@@ -2257,7 +2257,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"adtshwathwrjrjhrtj\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2302,7 +2302,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2347,7 +2347,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account 2\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account 2\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2392,7 +2392,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Another Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"adhgsdyjkruykltjlksfhd\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Another Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"adhgsdyjkruykltjlksfhd\",\n    \"client_secret\": \"adfgsfhwhathth\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2437,7 +2437,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Another Account Test\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"sdGHSDIUÇGÇLFJHKFHJKFHJKF\",\n    \"client_secret\": \"DULFJGÇGJKFLHJÇGJLJGLF\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Another Account Test\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"sdGHSDIUÇGÇLFJHKFHJKFHJKF\",\n    \"client_secret\": \"DULFJGÇGJKFLHJÇGJLJGLF\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2666,7 +2666,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"id\": 1,\n    \"name\": \"Apple Account Updated\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"Apple\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"\",\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account Updated to be amazing\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"

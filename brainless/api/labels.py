@@ -6,24 +6,24 @@ from flask import abort
 from configuration import db
 from models.label import Label, LabelSchema
 
-def create(user_id, account_id, label):
+def create(user_id, account_id, body):
     """
     This function creates a new label for a specific account,
     user combination based on the passed-in label data
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param label: label to create in labels structure
+    :param body: label to create in labels structure
     :return: 201 on success, 409 on label already exists
     """
 
     schema = LabelSchema()
-    new_label = schema.load(label)
+    label = schema.load(body)
 
-    if new_label.create() is None:
-        abort(409, f'Label {new_label.name} already exists')
+    if label.create() is None:
+        abort(409, f'Label {label.name} already exists')
     else:
-        label_serialized = schema.dump(new_label)
+        label_serialized = schema.dump(label)
 
         return label_serialized, 201
 
@@ -72,21 +72,21 @@ def search(user_id, account_id):
 
     return labels_serialized, 200
 
-def update(user_id, account_id, label_id, label):
+def update(user_id, account_id, label_id, body):
     """
     This function updates label based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
     :param label_id: label_id passed-in URL
-    :param label: payload information
+    :param body: payload information
     :return: 200 on success, 404 on label not found
     """
 
     schema = LabelSchema()
-    label_to_update = schema.load(label)
+    label = schema.load(body)
 
-    updated_label = label_to_update.update()
+    updated_label = label.update()
 
     if updated_label is None:
         abort(404, f'Label {label_id} not found')

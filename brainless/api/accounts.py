@@ -6,25 +6,25 @@ from flask import abort
 from configuration import db
 from models.account import Account, AccountSchema
 
-def create(user_id, account):
+def create(user_id, body):
     """
     This function creates a new account for a specific user
     based on the passed-in account data
 
     :param user_id: user_id passed-in URL
-    :param account: account to create in accounts structure
+    :param body: account to create in accounts structure
     :return: 201 on success, 409 on account already exists
     """
 
     schema = AccountSchema()
-    new_account = schema.load(account)
+    account = schema.load(body)
 
-    new_account.provider = new_account.provider.upper()
+    account.provider = account.provider.upper()
 
-    if new_account.create() is None:
-        abort(409, f'Account {new_account.name} already exists')
+    if account.create() is None:
+        abort(409, f'Account {account.name} already exists')
     else:
-        account_serialized = schema.dump(new_account)
+        account_serialized = schema.dump(account)
 
         return account_serialized, 201
 
@@ -77,20 +77,20 @@ def search(user_id):
 
     return accounts_serialized, 200
 
-def update(user_id, account_id, account):
+def update(user_id, account_id, body):
     """
     This function updates an account based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param account: payload information
+    :param body: payload information
     :return: 200 on success, 404 on account not found
     """
 
     schema = AccountSchema()
-    account_to_update = schema.load(account)
+    account = schema.load(body)
 
-    updated_account = account_to_update.update()
+    updated_account = account.update()
 
     if updated_account is None:
         abort(404, f'Account {account_id} not found')

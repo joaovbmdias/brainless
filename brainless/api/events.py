@@ -6,7 +6,7 @@ from flask import abort
 from configuration import db
 from models.event import Event, EventSchema
 
-def create(user_id, account_id, calendar_id, event):
+def create(user_id, account_id, calendar_id, body):
     """
     This function creates a new event for a specific event
     of a specific user based on the passed-in event data
@@ -14,17 +14,17 @@ def create(user_id, account_id, calendar_id, event):
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
     :param calendar_id: calendar_id passed-in URL
-    :param event: event to create in events structure
+    :param body: event to create in events structure
     :return: 201 on success, 409 on event already exists
     """    
     
     schema = EventSchema()
-    new_event = schema.load(event)
+    event = schema.load(body)
 
-    if new_event.create() is None:
-        abort(409, f'Event {new_event.name} already exists')
+    if event.create() is None:
+        abort(409, f'Event {event.name} already exists')
     else:
-        event_serialized = schema.dump(new_event)
+        event_serialized = schema.dump(event)
 
         return event_serialized, 201
 
@@ -74,7 +74,7 @@ def search(user_id, account_id, calendar_id):
 
     return events_serialized, 200
 
-def update(user_id, account_id, calendar_id, event_id, event):
+def update(user_id, account_id, calendar_id, event_id, body):
     """
     This function updates an account based on the provided information
 
@@ -82,14 +82,14 @@ def update(user_id, account_id, calendar_id, event_id, event):
     :param account_id: account_id passed-in URL
     :param calendar_id: calendar_id passed-in URL
     :param event_id: event_id passed-in URL
-    :param event: payload information
+    :param body: payload information
     :return: 200 on success, 404 on event not found
     """
 
     schema = EventSchema()
-    event_to_update = schema.load(event)
+    event = schema.load(body)
 
-    updated_event = event_to_update.update()
+    updated_event = event.update()
 
     if updated_event is None:
         abort(404, f'Event {event_id} not found')

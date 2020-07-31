@@ -6,24 +6,24 @@ from flask import abort
 from configuration import db
 from models.project import Project, ProjectSchema
 
-def create(user_id, account_id, project):
+def create(user_id, account_id, body):
     """
     This function creates a new project for a specific account
     of a specific user based on the passed-in project data
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param project: project to create in projects structure
+    :param body: project to create in projects structure
     :return: 201 on success, 409 on project already exists
     """
 
     schema = ProjectSchema()
-    new_project = schema.load(project)
+    project = schema.load(body)
 
-    if new_project.create() is None:
-        abort(409, f'Project {new_project.name} already exists')
+    if project.create() is None:
+        abort(409, f'Project {project.name} already exists')
     else:
-        project_serialized = schema.dump(new_project)
+        project_serialized = schema.dump(project)
 
         return project_serialized, 201
 
@@ -71,7 +71,7 @@ def search(user_id, account_id):
 
     return projects_serialized, 200
 
-def update(user_id, account_id, project_id, project):
+def update(user_id, account_id, project_id, body):
     """
     This function updates an account based on the provided information
 
@@ -83,9 +83,9 @@ def update(user_id, account_id, project_id, project):
     """
 
     schema = ProjectSchema()
-    project_to_update = schema.load(project)
+    project = schema.load(body)
 
-    updated_project = project_to_update.update()
+    updated_project = project.update()
 
     if updated_project is None:
         abort(404, f'Project {project_id} not found')

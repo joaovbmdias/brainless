@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # Create the connexion application instance
-connexion_app = connexion.App(__name__, specification_dir=os.path.join(basedir, 'swagger'))
+connexion_app = connexion.App(__name__, specification_dir=os.path.join(basedir, 'api'))
 
 #get the underlying flask app
 app = connexion_app.app
@@ -22,4 +22,4 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Read the swagger.yml file to configure the endpoints
-connexion_app.add_api('swagger.yaml')
+connexion_app.add_api('api.yaml')

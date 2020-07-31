@@ -1,0 +1,1085 @@
+openapi: "3.0.0"
+info:
+  title: OpenAPI file for the Brainless API
+  version: "1.0.0"
+  
+servers:
+  - url: http://localhost:5000/api
+    description: Dev server
+
+# Paths supported by the server application
+paths:
+###############################################################################################################################
+###############################################################################################################################
+################################################            USERS             #################################################
+###############################################################################################################################
+###############################################################################################################################
+  /users:
+    post:
+      operationId: api.users.create
+      summary: "API operation for user creation"
+      requestBody:
+        $ref: '#/components/requestBodies/userBody'
+      responses:
+        201:
+          description: "Successfully created the user"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+###############################################################################################################################
+###############################################################################################################################
+###############################################            ACCOUNTS             ###############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}:
+    get:
+      operationId: "api.accounts.read"
+      summary: "API operation for account retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved account information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+    put:
+      operationId: "api.accounts.update"
+      summary: "API operation for account update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/accountBody'
+      responses:
+        201:
+          description: "Successfully updated the account"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+    delete:
+      operationId: "api.accounts.delete"
+      summary: "API operation for account deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the account"
+  /users/{user_id}/accounts:
+    get:
+      operationId: "api.accounts.search"
+      summary: "API operation for account retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved account information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+    post:
+      operationId: "api.accounts.create"
+      summary: "API operation for account creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/accountBody'
+      responses:
+        201:
+          description: "Successfully created the account"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+###############################################################################################################################
+###############################################################################################################################
+###############################################            CALENDARS             ##############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}:
+    get:
+      operationId: "api.calendars.read"
+      summary: "API operation for calendar retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved calendar information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar'
+    put:
+      operationId: "api.calendars.update"
+      summary: "API operation for calendar update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/calendarBody'
+      responses:
+        201:
+          description: "Successfully updated the calendar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar'
+    delete:
+      operationId: "api.calendars.delete"
+      summary: "API operation for calendar deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the calendar"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the calendar"
+  /users/{user_id}/accounts/{account_id}/calendars:
+    get:
+      operationId: "api.calendars.search"
+      summary: "API operation for calendar retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved calendar information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar'
+    post:
+      operationId: "api.calendars.create"
+      summary: "API operation for calendar creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the project's account"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/calendarBody'
+      responses:
+        201:
+          description: "Successfully created the calendar"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/calendar'
+###############################################################################################################################
+###############################################################################################################################
+################################################            EVENTS               ##############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}/events/{event_id}:
+    get:
+      operationId: "api.events.read"
+      summary: "API operation for event retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved event information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+    put:
+      operationId: "api.events.update"
+      summary: "API operation for event update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/eventBody'
+      responses:
+        201:
+          description: "Successfully updated the event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+    delete:
+      operationId: "api.events.delete"
+      summary: "API operation for event deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "event_id"
+          in: path
+          description: "ID of the event"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the event"
+  /users/{user_id}/accounts/{account_id}/calendars/{calendar_id}/events:
+    get:
+      operationId: "api.events.search"
+      summary: "API operation for event retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved event information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+    post:
+      operationId: "api.events.create"
+      summary: "API operation for event creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the event's account"
+          required: True
+          schema:
+            type: integer
+        - name: "calendar_id"
+          in: path
+          description: "ID of the event's account"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/eventBody'
+      responses:
+        201:
+          description: "Successfully created the event"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/event'
+###############################################################################################################################
+###############################################################################################################################
+###############################################            PROJECTS             ###############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/projects/{project_id}:
+    get:
+      operationId: "api.projects.read"
+      summary: "API operation for project retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved project information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+    put:
+      operationId: "api.projects.update"
+      summary: "API operation for project update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/projectBody'
+      responses:
+        201:
+          description: "Successfully updated the project"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+    delete:
+      operationId: "api.projects.delete"
+      summary: "API operation for project deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the project"
+  /users/{user_id}/accounts/{account_id}/projects:
+    get:
+      operationId: "api.projects.search"
+      summary: "API operation for project retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved project information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+    post:
+      operationId: "api.projects.create"
+      summary: "API operation for project creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the project's account"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/projectBody'
+      responses:
+        201:
+          description: "Successfully created the project"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+###############################################################################################################################
+###############################################################################################################################
+#################################################            TASKS             ################################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/projects/{project_id}/tasks/{task_id}:
+    get:
+      operationId: "api.tasks.read"
+      summary: "API operation for task retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+        - name: "task_id"
+          in: path
+          description: "ID of the task"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved task information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+    put:
+      operationId: "api.tasks.update"
+      summary: "API operation for task update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+        - name: "task_id"
+          in: path
+          description: "ID of the task"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/taskBody'
+      responses:
+        201:
+          description: "Successfully updated the task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+    delete:
+      operationId: "api.tasks.delete"
+      summary: "API operation for task deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+        - name: "task_id"
+          in: path
+          description: "ID of the task"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the task"
+  /users/{user_id}/accounts/{account_id}/projects/{project_id}/tasks:
+    get:
+      operationId: "api.tasks.search"
+      summary: "API operation for task retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved task information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+    post:
+      operationId: "api.tasks.create"
+      summary: "API operation for task creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the project's account"
+          required: True
+          schema:
+            type: integer
+        - name: "project_id"
+          in: path
+          description: "ID of the project"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/taskBody'
+      responses:
+        201:
+          description: "Successfully created the task"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/task'
+###############################################################################################################################
+###############################################################################################################################
+#################################################            Labels             ###############################################
+###############################################################################################################################
+###############################################################################################################################
+  /users/{user_id}/accounts/{account_id}/labels/{label_id}:
+    get:
+      operationId: "api.labels.read"
+      summary: "API operation for label retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "label_id"
+          in: path
+          description: "ID of the label"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved label information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+    put:
+      operationId: "api.labels.update"
+      summary: "API operation for label update"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "label_id"
+          in: path
+          description: "ID of the label"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/labelBody'
+      responses:
+        201:
+          description: "Successfully updated the label"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+    delete:
+      operationId: "api.labels.delete"
+      summary: "API operation for label deletion"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+        - name: "label_id"
+          in: path
+          description: "ID of the label"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Successfully deleted the label"
+  /users/{user_id}/accounts/{account_id}/labels:
+    get:
+      operationId: "api.labels.search"
+      summary: "API operation for label retrieval"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the account"
+          required: True
+          schema:
+            type: integer
+      responses:
+        200:
+          description: "Sucessfully retrieved label information"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+    post:
+      operationId: "api.labels.create"
+      summary: "API operation for label creation"
+      parameters:
+        - name: "user_id"
+          in: path
+          description: "ID of the account owner"
+          required: True
+          schema:
+            type: integer
+        - name: "account_id"
+          in: path
+          description: "ID of the project's account"
+          required: True
+          schema:
+            type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/labelBody'
+      responses:
+        201:
+          description: "Successfully created the label"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+
+components:
+  requestBodies:
+    userBody:
+      description: A JSON object containing user information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/user'
+    accountBody:
+      description: A JSON object containing account information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/account'
+    calendarBody:
+      description: A JSON object containing calendar information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/calendar'
+    eventBody:
+      description: A JSON object containing event information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/event'
+    projectBody:
+      description: A JSON object containing project information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/project'
+    taskBody:
+      description: A JSON object containing task information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/task'
+    labelBody:
+      description: A JSON object containing label information
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/label'
+  schemas:
+    user:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+      required:
+        - username
+        - password
+        - first_name
+        - last_name
+    account:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        provider:
+          type: string
+        client_id:
+          type: string
+          nullable: true
+        client_secret:
+          type: string
+          nullable: true
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        api_token:
+          type: string
+          nullable: true
+      required:
+        - name
+        - provider
+    calendar:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        name:
+          type: string
+        guid:
+          type: string
+      required:
+        - account_id
+        - name
+        - guid
+    event:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        start_datetime:
+          type: string
+        end_datetime:
+          type: string
+        guid:
+          type: string
+        calendar_id:
+          type: integer
+      required:
+        - calendar_id
+        - name
+        - start_datetime
+        - end_datetime
+        - guid
+    project:
+      type: object
+      properties:
+        id:
+          type: integer
+        account_id:
+          type: integer
+        name:
+          type: string
+        guid:
+          type: string
+      required:
+        - account_id
+        - name
+        - guid
+    task:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        project_id:
+          type: integer
+        due_datetime:
+          type: string
+        priority:
+          type: integer
+        guid:
+          type: string
+      required:
+        - project_id
+        - name
+        - due_datetime
+        - priority
+        - guid
+    label:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        guid:
+          type: string
+        account_id:
+          type: integer
+        order:
+          type: integer
+      required:
+        - name
+        - guid
+        - account_id
+        - order

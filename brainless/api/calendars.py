@@ -6,26 +6,25 @@ from flask import abort
 from configuration import db
 from models.calendar import Calendar, CalendarSchema
 
-def create(user_id, account_id, calendar):
+def create(user_id, account_id, body):
     """
     This function creates a new calendar for a specific account
     of a specific user based on the passed-in calendar data
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
-    :param calendar: calendar to create in events structure
+    :param body: calendar to create in events structure
     :return: 201 on success, 409 on calendar already exists
     """
 
     schema = CalendarSchema()
-    new_calendar = schema.load(calendar)
+    calendar = schema.load(body)
 
-    if new_calendar.create() is None:
-        guid = calendar.get('guid')
-        abort(409, f'Calendar {guid} already exists for account {account_id}')
+    if calendar.create() is None:
+        abort(409, f'Calendar {calendar.guid} already exists for account {account_id}')
     
     else:
-        serialized_calendar = schema.dump(new_calendar)
+        serialized_calendar = schema.dump(calendar)
 
         return serialized_calendar, 201
 
@@ -73,21 +72,21 @@ def search(user_id, account_id):
 
     return calendars_serialized, 200
 
-def update(user_id, account_id, calendar_id, calendar):
+def update(user_id, account_id, calendar_id, body):
     """
     This function updates an account based on the provided information
 
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
     :param calendar_id: calendar_id passed-in URL
-    :param calendar: payload information
+    :param body: payload information
     :return: 200 on success, 404 on calendar not found
     """
 
     schema = CalendarSchema()
-    calendar_to_update = schema.load(calendar)
+    calendar = schema.load(body)
 
-    updated_calendar = calendar_to_update.update()
+    updated_calendar = calendar.update()
 
     if updated_calendar is None:
         abort(404, f'Calendar {calendar_id} not found')

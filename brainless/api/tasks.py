@@ -6,7 +6,7 @@ from flask import abort
 from configuration import db
 from models.task import Task, TaskSchema
 
-def create(user_id, account_id, project_id, task):
+def create(user_id, account_id, project_id, body):
     """
     This function creates a new task for a specific account,
     user and project combination based on the passed-in task data
@@ -14,17 +14,17 @@ def create(user_id, account_id, project_id, task):
     :param user_id: user_id passed-in URL
     :param account_id: account_id passed-in URL
     :param project_id: project_id passed-in URL
-    :param task: task to create in tasks structure
+    :param body: task to create in tasks structure
     :return: 201 on success, 409 on task already exists
     """
 
     schema = TaskSchema()
-    new_task = schema.load(task)
+    task = schema.load(body)
 
-    if new_task.create() is None:
-        abort(409, f'Task {new_task.name} already exists')
+    if task.create() is None:
+        abort(409, f'Task {task.name} already exists')
     else:
-        task_serialized = schema.dump(new_task)
+        task_serialized = schema.dump(task)
 
         return task_serialized, 201
 
@@ -75,7 +75,7 @@ def search(user_id, account_id, project_id):
 
     return tasks_serialized, 200
 
-def update(user_id, account_id, project_id, task_id, task):
+def update(user_id, account_id, project_id, task_id, body):
     """
     This function updates an account based on the provided information
 
@@ -83,19 +83,19 @@ def update(user_id, account_id, project_id, task_id, task):
     :param account_id: account_id passed-in URL
     :param project_id: project_id passed-in URL
     :param task_id: task_id passed-in URL
-    :param task: payload information
+    :param body: payload information
     :return: 200 on success, 404 on task not found
     """
 
     schema = TaskSchema()
-    task_to_update = schema.load(task)
+    task_to_update = schema.load(body)
 
-    updated_task = task_to_update.update()
+    task = task_to_update.update()
 
-    if updated_task is None:
+    if task is None:
         abort(404, f'Task {task_id} not found')
     else:
-        task_serialized = schema.dump(updated_task)
+        task_serialized = schema.dump(task)
 
         return task_serialized, 200
 

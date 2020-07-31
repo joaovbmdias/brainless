@@ -14,9 +14,9 @@ class Account(db.Model, Template):
     """ Account class """
     __tablename__ = 'account'
     __table_args__ = (
-        CheckConstraint('(authentication_type = \'' + const.OAUTH +     '\' AND length(username)=0  AND length(password)=0 AND length(api_token)=0 AND length(client_id)>0 AND length(client_secret)>0) OR authentication_type != \'' + const.OAUTH     + '\'', name='auth_oauth'),
-        CheckConstraint('(authentication_type = \'' + const.USER_PASS + '\' AND length(username)>0  AND length(password)>0 AND length(api_token)=0 AND length(client_id)=0 AND length(client_secret)=0) OR authentication_type != \'' + const.USER_PASS + '\'', name='auth_user_pass'),
-        CheckConstraint('(authentication_type = \'' + const.API_TOKEN + '\' AND length(username)=0  AND length(password)=0 AND length(api_token)>0 AND length(client_id)=0 AND length(client_secret)=0) OR authentication_type != \'' + const.API_TOKEN + '\'', name='auth_api_token'))
+        CheckConstraint('(authentication_type = \'' + const.OAUTH +     '\' AND username is null      AND password is null     AND api_token is null     AND client_id is not null AND client_secret is not null) OR authentication_type != \'' + const.OAUTH     + '\'', name='auth_oauth'),
+        CheckConstraint('(authentication_type = \'' + const.USER_PASS + '\' AND username is not null  AND password is not null AND api_token is null     AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.USER_PASS + '\'', name='auth_user_pass'),
+        CheckConstraint('(authentication_type = \'' + const.API_TOKEN + '\' AND username is null      AND password is null     AND api_token is not null AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.API_TOKEN + '\'', name='auth_api_token'))
 
     id                  = db.Column(db.Integer,    primary_key=True)
     name                = db.Column(db.String(50), unique=True,             nullable=False)
