@@ -5,6 +5,7 @@ This is the labels module and supports all the ReST actions for LABELS
 from flask import abort
 from configuration import db
 from models.label import Label, LabelSchema
+from constants import FAILURE
 
 def create(user_id, account_id, body):
     """
@@ -16,16 +17,12 @@ def create(user_id, account_id, body):
     :param body: label to create in labels structure
     :return: 201 on success, 409 on label already exists
     """
-
     schema = LabelSchema()
     label = schema.load(body)
-
-    if label.create() is None:
+    if label.create() == FAILURE:
         abort(409, f'Label {label.name} already exists')
     else:
-        label_serialized = schema.dump(label)
-
-        return label_serialized, 201
+        return schema.dump(label), 201
 
 def read(user_id, account_id, label_id):
     """
@@ -36,23 +33,17 @@ def read(user_id, account_id, label_id):
     :param label_id: label_id passed-in URL
     :return: 200 on success, 404 on label already exists
     """
-
-    label = Label(id=label_id,
-                  name=None,
-                  order=None,
-                  guid=None,
-                  account_id=None,
-                  brain_enabled='Y')
-
-    read_label = label.read()
-
-    if read_label is None:
+    label = Label(id            = label_id,
+                  name          = None,
+                  order         = None,
+                  guid          = None,
+                  account_id    = None,
+                  brain_enabled = 'Y')
+    if label.read() == FAILURE:
         abort(404, f'Label with id:{label_id} not found')
     else:
         schema = LabelSchema()
-        label_serialized = schema.dump(read_label)
-
-        return label_serialized, 200
+        return schema.dump(label), 200
 
 def search(user_id, account_id):
     """
@@ -62,15 +53,11 @@ def search(user_id, account_id):
     :param account_id: account_id passed-in URL
     :return: 200 on success, 404 on no labels found
     """
-
-    existing_labels = Label.query.filter(Label.account_id == account_id).all()
-    if existing_labels is None:
+    labels = Label.query.filter(Label.account_id == account_id).all()
+    if labels is None:
         abort(404, f'No labels found')
-
     schema = LabelSchema(many=True)
-    labels_serialized = schema.dump(existing_labels)
-
-    return labels_serialized, 200
+    return schema.dump(labels), 200
 
 def update(user_id, account_id, label_id, body):
     """
@@ -82,18 +69,12 @@ def update(user_id, account_id, label_id, body):
     :param body: payload information
     :return: 200 on success, 404 on label not found
     """
-
     schema = LabelSchema()
     label = schema.load(body)
-
-    updated_label = label.update()
-
-    if updated_label is None:
+    if label.update() == FAILURE:
         abort(404, f'Label {label_id} not found')
     else:
-        label_serialized = schema.dump(updated_label)
-
-        return label_serialized, 200
+        return schema.dump(label), 200
 
 def delete(user_id, account_id, label_id):
     """
@@ -104,15 +85,13 @@ def delete(user_id, account_id, label_id):
     :param label_id: label_id passed-in URL
     :return: 200 on success, 404 on label not found
     """
-
-    label_to_delete = Label(id=label_id,
-                            name=None,
-                            order=None,
-                            guid=None,
-                            account_id=None,
-                            brain_enabled='Y')
-
-    if label_to_delete.delete() is not None:
+    labels = Label(id            =label_id,
+                   name          = None,
+                   order         = None,
+                   guid          = None,
+                   account_id    = None,
+                   brain_enabled = 'Y')
+    if labels.delete() == FAILURE:
         abort(404, f'Label {label_id} not found')
     else:
         return "Label deleted", 200

@@ -26,7 +26,7 @@ def _run_on_start():
     """
     db.metadata.create_all(db.engine)
     
-    sync_daemon.start()
+    #sync_daemon.start()
     #brainless_daemon.start()
 
 

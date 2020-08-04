@@ -33,9 +33,9 @@ class Event(db.Model, Template):
     def exists(self):
 
         try:
-            existing_event = Event.query.filter(or_(Event.id              == self.id, 
-                                                    and_(Event.guid       == self.guid, 
-                                                        Event.calendar_id == self.calendar_id))).one()   
+            existing_event = Event.query.filter(or_(Event.id            == self.id, 
+                                                 and_(Event.guid        == self.guid, 
+                                                      Event.calendar_id == self.calendar_id))).one()
         except NoResultFound:
             return None
 

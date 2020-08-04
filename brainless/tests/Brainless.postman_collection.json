@@ -2257,7 +2257,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"adtshwathwrjrjhrtj\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"adtshwathwrjrjhrtj\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2302,7 +2302,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2347,7 +2347,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account 2\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account 2\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2392,7 +2392,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Another Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"adhgsdyjkruykltjlksfhd\",\n    \"client_secret\": \"adfgsfhwhathth\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Another Account\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"adhgsdyjkruykltjlksfhd\",\n    \"client_secret\": \"adfgsfhwhathth\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2437,7 +2437,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Another Account Test\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"sdGHSDIUÇGÇLFJHKFHJKFHJKF\",\n    \"client_secret\": \"DULFJGÇGJKFLHJÇGJLJGLF\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Another Account Test\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"sdGHSDIUÇGÇLFJHKFHJKFHJKF\",\n    \"client_secret\": \"DULFJGÇGJKFLHJÇGJLJGLF\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2666,7 +2666,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"Apple Account Updated to be amazing\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_token\": null,\n    \"sync_frequency\": 1\n}",
+									"raw": "{\n    \"name\": \"Apple Account Updated to be amazing\",\n    \"account_type\": \"CALENDAR\",\n    \"authentication_type\": \"OAUTH2\",\n    \"provider\": \"APPLE\",\n    \"user_id\": 1,\n    \"client_id\": \"teste@gmail.com\",\n    \"client_secret\": \"016f18b539d96673efd2be27017eb79eeef1aa9e\",\n    \"username\": null,\n    \"password\": null,\n    \"api_key\": null,\n    \"sync_frequency\": 1\n}",
 									"options": {
 										"raw": {
 											"language": "json"

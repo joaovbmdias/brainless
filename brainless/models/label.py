@@ -24,7 +24,8 @@ class Label(db.Model, Template):
 
     __table_args__ = (
         CheckConstraint('brain_enabled IN (\'Y\', \'N\')', name='brain_enabled_val'),
-        UniqueConstraint('guid', 'account_id', name='unique_guid'))
+        UniqueConstraint('guid', 'account_id',  name='unique_guid'),
+        UniqueConstraint('order', 'account_id', name='unique_guid'))
     
     def __init__(self, name, order, guid, account_id, brain_enabled='Y', id=None):
         self.name          = name

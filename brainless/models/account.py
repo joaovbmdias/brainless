@@ -7,6 +7,7 @@ from models.calendar        import Calendar
 from models.project         import Project
 from models.label           import Label
 from models.template        import Template
+from decorators             import debug
 import constants            as const
 import providers.provider   as provider
 
@@ -14,9 +15,10 @@ class Account(db.Model, Template):
     """ Account class """
     __tablename__ = 'account'
     __table_args__ = (
-        CheckConstraint('(authentication_type = \'' + const.OAUTH +     '\' AND username is null      AND password is null     AND api_token is null     AND client_id is not null AND client_secret is not null) OR authentication_type != \'' + const.OAUTH     + '\'', name='auth_oauth'),
-        CheckConstraint('(authentication_type = \'' + const.USER_PASS + '\' AND username is not null  AND password is not null AND api_token is null     AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.USER_PASS + '\'', name='auth_user_pass'),
-        CheckConstraint('(authentication_type = \'' + const.API_TOKEN + '\' AND username is null      AND password is null     AND api_token is not null AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.API_TOKEN + '\'', name='auth_api_token'))
+        CheckConstraint('authentication_type IN (\'' + const.OAUTH + '\', \'' + const.USER_PASS + '\', \'' + const.API_KEY + '\')', name='auth_type_val'),
+        CheckConstraint('(authentication_type = \'' + const.OAUTH +     '\' AND username is null      AND password is null     AND api_key is null     AND client_id is not null AND client_secret is not null) OR authentication_type != \'' + const.OAUTH     + '\'', name='auth_oauth'),
+        CheckConstraint('(authentication_type = \'' + const.USER_PASS + '\' AND username is not null  AND password is not null AND api_key is null     AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.USER_PASS + '\'', name='auth_user_pass'),
+        CheckConstraint('(authentication_type = \'' + const.API_KEY + '\' AND username is null      AND password is null     AND api_key is not null AND client_id is null     AND client_secret is null)     OR authentication_type != \'' + const.API_KEY + '\'', name='auth_api_key'))
 
     id                  = db.Column(db.Integer,    primary_key=True)
     name                = db.Column(db.String(50), unique=True,             nullable=False)
@@ -27,7 +29,7 @@ class Account(db.Model, Template):
     password            = db.Column(db.String(64), nullable=True)
     client_id           = db.Column(db.String(64), nullable=True)
     client_secret       = db.Column(db.String(64), nullable=True)
-    api_token           = db.Column(db.String(64), nullable=True)
+    api_key             = db.Column(db.String(64), nullable=True)
     sync_frequency      = db.Column(db.Integer,    nullable=False,          default=1)
     last_sync           = db.Column(db.DateTime,   nullable=True,           default=None)
     next_sync           = db.Column(db.DateTime,   nullable=False,          default=datetime.utcnow)
@@ -39,7 +41,7 @@ class Account(db.Model, Template):
     projects  = db.relationship('Project',  backref='account', lazy=True, cascade="save-update, merge, delete")
     labels    = db.relationship('Label',    backref='account', lazy=True, cascade="save-update, merge, delete")
 
-    def __init__(self, name, provider, user_id, client_id, client_secret, authentication_type, username, password, api_token, id=None, account_type=const.CALENDAR, sync_frequency=5):
+    def __init__(self, name, provider, user_id, client_id, client_secret, authentication_type, username, password, api_key, id=None, account_type=const.CALENDAR, sync_frequency=5):
         self.id                  = id
         self.name                = name
         self.account_type        = account_type
@@ -50,17 +52,19 @@ class Account(db.Model, Template):
         self.client_secret       = client_secret
         self.username            = username
         self.password            = password
-        self.api_token           = api_token
+        self.api_key             = api_key
         self.sync_frequency      = sync_frequency
         self.last_sync           = datetime.utcnow()
         self.next_sync           = datetime.utcnow()
-    
-    def exists(self):
 
+    def exists(self):
         try:
-            existing_account = (Account.query.filter(or_(and_(Account.name     == self.name,     Account.user_id   == self.user_id), 
-                                                         and_(Account.provider == self.provider, Account.client_id == self.client_id),
-                                                             (Account.id       == self.id)))).one() 
+            existing_account = (Account.query.filter(or_(and_(Account.name     == self.name,     Account.user_id   == self.user_id, self.id is None), 
+                                                         and_(Account.provider == self.provider, Account.client_id == self.client_id, Account.user_id   == self.user_id, self.client_id is not None, self.id is None),
+                                                         and_(Account.provider == self.provider, Account.username  == self.username,  Account.user_id   == self.user_id, self.username  is not None, self.id is None),
+                                                         and_(Account.provider == self.provider, Account.api_key   == self.api_key,   Account.user_id   == self.user_id, self.api_key   is not None, self.id is None),
+                                                         (Account.id == self.id)
+                                                         ))).one()
         except NoResultFound:
             return None
 
@@ -73,7 +77,7 @@ class Account(db.Model, Template):
                                'password':      self.password,
                                'client_id':     self.client_id,
                                'client_secret': self.client_secret,
-                               'api_token':     self.api_token,
+                               'api_key':       self.api_key,
                                'account_type':  self.account_type}
 
         account_data = provider.get_data(authentication_data)

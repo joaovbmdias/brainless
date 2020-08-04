@@ -1,79 +1,71 @@
 from datetime import datetime
 from configuration import db
+from constants import SUCCESS, FAILURE
 
 class Template():
     """ Template class """
 
     def exists(self):
-
         return self
 
     def create(self, bypass_commit=False):
         """
         Core Create
         """
-
         if self.exists() is None:
-            # add the template to the database
-            db.session.add(self)
-            if not bypass_commit:
-                db.session.commit()
-
-            return self
-
+            try:
+                db.session.add(self)
+                if not bypass_commit:
+                    db.session.commit()
+            except:
+                return FAILURE
+            return SUCCESS
         else:
-            return None
+            return FAILURE
 
     def read(self):
         """
         Core Read
         """
-
         self = self.exists()
 
-        return self
+        if self is not None:
+            return SUCCESS
+        else:
+            return FAILURE
 
     def update(self, bypass_commit=False):
         """
         Core Update
         """
-
-        existing = self.exists()
-
-        if existing.id is not None:
-            # Update the template in the database
-            #self.id = existing.id
-
-            db.session.merge(self)
-            if not bypass_commit:
-                db.session.commit()
-
-            return self
-
+        if self.exists() is not None:
+            try:
+                db.session.merge(self)
+                if not bypass_commit:
+                    db.session.commit()
+            except:
+                return FAILURE
+            return SUCCESS
         else:
-            return None
+            return FAILURE
 
     def delete(self, bypass_commit=False):
         """
         Core Delete
         """        
-        
-        existing_template = self.exists()
-
-        if existing_template is not None:
-            db.session.delete(existing_template)
+        existing = self.exists()
+        if existing is not None:
+            db.session.delete(existing)
             if not bypass_commit:
                 db.session.commit()
-
-            return None
+            return SUCCESS
         else:
-            return self
+            return FAILURE
 
     def synchronize(self):
         """
         Core Synchronize
         """
-
         if self.id is None:
             self.create(bypass_commit=True)
         else:

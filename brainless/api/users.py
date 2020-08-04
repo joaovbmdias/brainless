@@ -5,6 +5,7 @@ This is the user module and supports all the ReST actions for USERS
 from flask import abort
 from configuration import db
 from models.user import User, UserSchema
+from constants import SUCCESS, FAILURE
 
 def create(body):
     """
@@ -18,7 +19,7 @@ def create(body):
     schema = UserSchema()
     user = schema.load(body)
 
-    if user.create() is None:
+    if user.create() == FAILURE:
         abort(409, f'User {user.username} already exists')
     else:
         user_serialized = schema.dump(user)

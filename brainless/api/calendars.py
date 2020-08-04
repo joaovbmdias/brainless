@@ -5,6 +5,7 @@ This is the calendar module and supports all the ReST actions for CALENDARS
 from flask import abort
 from configuration import db
 from models.calendar import Calendar, CalendarSchema
+from constants import FAILURE
 
 def create(user_id, account_id, body):
     """
@@ -16,17 +17,12 @@ def create(user_id, account_id, body):
     :param body: calendar to create in events structure
     :return: 201 on success, 409 on calendar already exists
     """
-
     schema = CalendarSchema()
     calendar = schema.load(body)
-
-    if calendar.create() is None:
+    if calendar.create() == FAILURE:
         abort(409, f'Calendar {calendar.guid} already exists for account {account_id}')
-    
     else:
-        serialized_calendar = schema.dump(calendar)
-
-        return serialized_calendar, 201
+        return schema.dump(calendar), 201
 
 def read(user_id, account_id, calendar_id):
     """
@@ -37,22 +33,16 @@ def read(user_id, account_id, calendar_id):
     :param calendar_id: calendar_id passed-in URL
     :return: 200 on success, 404 on calendar already exists
     """
-
-    calendar = Calendar(id=calendar_id,
-                        name = None,
-                        guid = None,
-                        account_id = None,
+    calendar = Calendar(id            = calendar_id,
+                        name          = None,
+                        guid          = None,
+                        account_id    = None,
                         brain_enabled = None)
-
-    read_calendar = calendar.read()
-
-    if read_calendar is None:
+    if calendar.read() == FAILURE:
         abort(404, f'Calendar with id:{calendar_id} not found')
     else:
         schema = CalendarSchema()
-        calendar_serialized = schema.dump(read_calendar)
-
-        return calendar_serialized, 200
+        return schema.dump(calendar), 200
 
 def search(user_id, account_id):
     """
@@ -62,15 +52,11 @@ def search(user_id, account_id):
     :param account_id: account_id passed-in URL
     :return: 200 on success, 404 on no calendars found
     """
-
-    existing_calendars = Calendar.query.filter(Calendar.account_id == account_id).all()
-    if existing_calendars is None:
+    calendars = Calendar.query.filter(Calendar.account_id == account_id).all()
+    if calendars is None:
         abort(404, f'No calendars found')
-
     schema = CalendarSchema(many=True)
-    calendars_serialized = schema.dump(existing_calendars)
-
-    return calendars_serialized, 200
+    return schema.dump(calendars), 200
 
 def update(user_id, account_id, calendar_id, body):
     """
@@ -82,16 +68,12 @@ def update(user_id, account_id, calendar_id, body):
     :param body: payload information
     :return: 200 on success, 404 on calendar not found
     """
-
     schema = CalendarSchema()
     calendar = schema.load(body)
-
-    updated_calendar = calendar.update()
-
-    if updated_calendar is None:
+    if calendar.update() == FAILURE:
         abort(404, f'Calendar {calendar_id} not found')
     else:
-        return schema.dump(updated_calendar), 200
+        return schema.dump(calendar), 200
 
 def delete(user_id, account_id, calendar_id):
     """
@@ -102,14 +84,13 @@ def delete(user_id, account_id, calendar_id):
     :param calendar_id: calendar_id passed-in URL
     :return: 200 on success, 404 on calendar not found
     """
+    calendar = Calendar(id            = calendar_id,
+                        name          = None,
+                        guid          = None,
+                        account_id    = None,
+                        brain_enabled = None)
 
-    calendar_to_delete = calendar = Calendar(id=calendar_id,
-                                             name = None,
-                                             guid = None,
-                                             account_id = None,
-                                             brain_enabled = None)
-
-    if calendar_to_delete.delete() is not None:
+    if calendar.delete() == FAILURE:
         abort(404, f'Calendar {calendar_id} not found')
     else:
         return "Calendar deleted", 200

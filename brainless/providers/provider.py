@@ -10,7 +10,7 @@ def get_google_data(authentication_data):
     pass
 
 def get_doist_data(authentication_data):
-    return doist.get_data(authentication_data['api_token'])
+    return doist.get_data(authentication_data['api_key'])
 
 providers_mapping = {const.APPLE: get_apple_data,
                      const.GOOGLE: get_google_data,
