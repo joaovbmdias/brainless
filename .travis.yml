@@ -8,15 +8,19 @@ python:
 services:
   - docker
 
-before_install:
-  - docker build -t brainless .
-  - docker run -d -p 127.0.0.1:5000:5000 brainless
-  - docker ps -a
-  - docker run brainless /bin/sh -c "cd /app; tox"
-
 # command to install dependencies
 install:
 before_script:
-  - pip install tox-travis
-# command to run tests
-script: tox
+  - pip install tox tox-travis
+
+jobs:
+  include:
+    - stage: test
+      script: tox
+    - stage: build docker image
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t brainless .
+      - docker images
+      - docker tag brainless $DOCKER_USERNAME/brainless
+      - docker push $DOCKER_USERNAME/brainless
