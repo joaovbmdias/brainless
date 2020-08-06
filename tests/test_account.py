@@ -11,6 +11,8 @@ class TestAccount(unittest.TestCase):
     Unit Testing Accounts
     """
     pass
+    def test_test(self):
+        self.assertEqual(1,1)
     # def test_1_1_create_account_oauth(self):
     #     """
     #     Test that it can create an account type OAUTH
