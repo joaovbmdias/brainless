@@ -3,6 +3,7 @@ include MANIFEST.in
 include LICENSE
 include README.rst
 include requirements.txt
+include dockerfile
 
 graft tests
 graft examples
