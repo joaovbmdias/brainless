@@ -44,6 +44,7 @@ jobs:
       - docker push $DOCKER_USERNAME/brainless-arm64
     - stage: build docker manifest
       script:
+      - echo export DOCKER_CLI_EXPERIMENTAL=enabled
       - docker manifest create $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version)
       - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version) --os linux --arch arm
       - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) --os linux --arch amd64
