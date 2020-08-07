@@ -3,11 +3,8 @@ language: python
 python:
   - "3.8"
 
-arch:
-  - amd64
-  - arm64
-
-#os: linux
+os: linux
+dist: bionic
 
 services:
   - docker
@@ -19,12 +16,29 @@ before_script:
 
 jobs:
   include:
-    - stage: test
+    - stage: test on AMD64
+      os: linux
+      arch: amd64
       script: tox
-    - stage: build docker image
+    - stage: test on ARM64
+      os: linux
+      arch: arm64
+      script: tox
+    - stage: build docker image AMD64
+      os: linux
+      arch: amd64
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
+      - docker images
+      - docker tag brainless $DOCKER_USERNAME/brainless
+      - docker push $DOCKER_USERNAME/brainless
+    - stage: build docker image ARM64
+      os: linux
+      arch: arm64
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t brainless dockerfile.arm64
       - docker images
       - docker tag brainless $DOCKER_USERNAME/brainless
       - docker push $DOCKER_USERNAME/brainless
