@@ -9,8 +9,8 @@ class TestUser(unittest.TestCase):
     """
     Unit Testing User
     """
-    pass
-    # def test_1_1_create(self):
+    def test_1_1_create(self):
+        self.assertEqual(1,1)
     #     """
     #     Test that it can create a user
     #     """

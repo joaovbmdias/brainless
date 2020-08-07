@@ -31,7 +31,9 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
       - docker images
-      - docker tag brainless $DOCKER_USERNAME/brainless
+      - docker tag brainless $DOCKER_USERNAME/brainless:amd64
+      - docker tag brainless $DOCKER_USERNAME/brainless:travis-$TRAVIS_BUILD_NUMBER
+      - docker tag brainless $DOCKER_USERNAME/brainless:version-$TRAVIS_COMMIT
       - docker push $DOCKER_USERNAME/brainless
     - stage: build docker image ARM64
       os: linux
@@ -40,5 +42,7 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
       - docker images
-      - docker tag brainless $DOCKER_USERNAME/brainless
+      - docker tag brainless $DOCKER_USERNAME/brainless:arm64
+      - docker tag brainless $DOCKER_USERNAME/brainless:travis-$TRAVIS_BUILD_NUMBER
+      - docker tag brainless $DOCKER_USERNAME/brainless:version-$TRAVIS_COMMIT
       - docker push $DOCKER_USERNAME/brainless
