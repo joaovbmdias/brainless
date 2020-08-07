@@ -31,9 +31,8 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
       - docker images
-      - docker tag brainless $DOCKER_USERNAME/brainless:amd64-v$(python setup.py --version)
-      - docker tag brainless $DOCKER_USERNAME/brainless
-      - docker push $DOCKER_USERNAME/brainless
+      - docker tag brainless $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version)
+      - docker push $DOCKER_USERNAME/brainless-amd64
     - stage: build docker image ARM64
       os: linux
       arch: arm64
@@ -41,6 +40,10 @@ jobs:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
       - docker images
-      - docker tag brainless $DOCKER_USERNAME/brainless:arm64-v$(python setup.py --version)
-      - docker tag brainless $DOCKER_USERNAME/brainless
-      - docker push $DOCKER_USERNAME/brainless
+      - docker tag brainless $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version)
+      - docker push $DOCKER_USERNAME/brainless-arm64
+    - stage: build docker manifest
+      - docker manifest create $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version)
+      - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version) --os linux --arch arm
+      - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) --os linux --arch amd64
+      - docker manifest push $DOCKER_USERNAME/brainless:v$(python setup.py --version)
