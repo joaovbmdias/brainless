@@ -1,9 +1,13 @@
-sudo: false
-
 language: python
 
 python:
   - "3.8"
+
+arch:
+  - amd64
+  - arm64
+
+#os: linux
 
 services:
   - docker
@@ -16,16 +20,8 @@ before_script:
 jobs:
   include:
     - stage: test
-      os: linux
-      arch:
-        - amd64
-        - arm64
       script: tox
     - stage: build docker image
-      os: linux
-      arch:
-        - amd64
-        - arm64
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker build -t brainless .
