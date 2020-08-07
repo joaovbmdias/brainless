@@ -42,7 +42,7 @@ jobs:
       - docker images
       - docker tag brainless $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version)
       - docker push $DOCKER_USERNAME/brainless-arm64
-    - stage: build docker manifest
+    - stage: build docker manifest for version
       script:
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -50,3 +50,11 @@ jobs:
       - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version) --os linux --arch arm
       - docker manifest annotate $DOCKER_USERNAME/brainless:v$(python setup.py --version) $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) --os linux --arch amd64
       - docker manifest push $DOCKER_USERNAME/brainless:v$(python setup.py --version)
+    - stage: build docker manifest for latest
+      script:
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - export DOCKER_CLI_EXPERIMENTAL=enabled
+      - docker manifest create $DOCKER_USERNAME/brainless:latest $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version)
+      - docker manifest annotate $DOCKER_USERNAME/brainless:latest $DOCKER_USERNAME/brainless-arm64:v$(python setup.py --version) --os linux --arch arm
+      - docker manifest annotate $DOCKER_USERNAME/brainless:latest $DOCKER_USERNAME/brainless-amd64:v$(python setup.py --version) --os linux --arch amd64
+      - docker manifest push $DOCKER_USERNAME/brainless:latest

@@ -9,7 +9,7 @@ with open("README.rst", encoding="utf-8") as f:
 
 setup(
     name="brainless",
-    version="0.1",
+    version="0.2",
     license="MIT",
     url="https://github.com/joaovbmdias/brainless",
     description="An automatic task scheduler for Todoist",
