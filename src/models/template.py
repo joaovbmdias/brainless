@@ -18,6 +18,7 @@ class Template():
                 if not bypass_commit:
                     db.session.commit()
             except:
+                db.session.rollback()
                 return FAILURE
             return SUCCESS
         else:
@@ -44,6 +45,7 @@ class Template():
                 if not bypass_commit:
                     db.session.commit()
             except:
+                db.session.rollback()
                 return FAILURE
             return SUCCESS
         else:
