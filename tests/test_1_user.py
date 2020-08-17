@@ -2,7 +2,9 @@ import sys
 import os
 os.chdir('src/')
 sys.path.append(os.getcwd())
-os.remove(os.getcwd()+'/brainless.db')
+
+if os.path.exists(os.getcwd()+'/brainless.db'):
+    os.remove(os.getcwd()+'/brainless.db')
 
 import unittest
 from configuration import db
