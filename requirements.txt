@@ -1,7 +1,7 @@
 click==7.1.1
 connexion==2.7.0
 continuous-threading==1.1.1
-Flask==1.1.2
+Flask==2.3.2
 flask-marshmallow==0.12.0
 Flask-SQLAlchemy==2.4.1
 marshmallow==3.6.0
